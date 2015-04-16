@@ -6,12 +6,12 @@ import android.widget.Toast;
 
 /**
  * Created by WANGZHENGZE on 2015/4/16.
- * ¹¤¾ßÀà
+ * å·¥å…·ç±»
  */
 public class Utils {
     /**
-     * ÅĞ¶Ïsd¿¨ÊÇ·ñ´æÔÚ
-     * @return ´æÔÚ·µ»Øtrue
+     * åˆ¤æ–­sdå¡æ˜¯å¦å­˜åœ¨
+     * @return å­˜åœ¨è¿”å›true
      */
     public static boolean hasSDCard() {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());

@@ -5,14 +5,14 @@ import android.content.SharedPreferences;
 
 /**
  * Created by WANGZHENGZE on 2015/4/16.
- * SharedPreferences²Ù×÷Àà
+ * SharedPreferencesæ“ä½œç±»
  */
 public class SharedPreferencesUtil {
 
     private final static String APP_NAME = "clever_zone";
 
     /**
-     * µÃµ½SharedPreferencesEditor
+     * å¾—åˆ°SharedPreferencesEditor
      * @param context context
      * @return editor
      */
@@ -21,7 +21,7 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * µÃµ½SharedPreferences
+     * å¾—åˆ°SharedPreferences
      * @param context context
      * @return SharedPreferences
      */
@@ -30,7 +30,7 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * SharedPreferences´æString
+     * SharedPreferenceså­˜String
      * @param context context
      * @param columnName columnName
      * @param value value
@@ -46,7 +46,7 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * SharedPreferences´æint
+     * SharedPreferenceså­˜int
      * @param context context
      * @param columnName columnName
      * @param value value
@@ -62,7 +62,7 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * SharedPreferencesÒÑ´æÔÚµÄint½øĞĞ¸üĞÂ
+     * SharedPreferenceså·²å­˜åœ¨çš„intè¿›è¡Œæ›´æ–°
      * @param context context
      * @param columnName columnName
      * @param value value
@@ -74,7 +74,7 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * SharedPreferences´ælong
+     * SharedPreferenceså­˜long
      * @param context context
      * @param columnName columnName
      * @param value value
@@ -90,7 +90,7 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * É¾³ıSharedPreferences
+     * åˆ é™¤SharedPreferences
      * @param context context
      * @param columnName columnName
      */
@@ -105,7 +105,7 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * ¶ÁÈ¡SharedPreferencesµÄString
+     * è¯»å–SharedPreferencesçš„String
      * @param context context
      * @param columnName columnName
      * @param defValue defValue
@@ -122,7 +122,7 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * ¶ÁÈ¡SharedPreferencesµÄint
+     * è¯»å–SharedPreferencesçš„int
      * @param context context
      * @param columnName columnName
      * @param defValue defValue
@@ -139,7 +139,7 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * ¶ÁÈ¡SharedPreferencesµÄlong
+     * è¯»å–SharedPreferencesçš„long
      * @param context context
      * @param columnName columnName
      * @param defValue defValue
@@ -156,7 +156,7 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * ÒÆ³ıSharedPreferencesÖĞµÄkey
+     * ç§»é™¤SharedPreferencesä¸­çš„key
      * @param context context
      * @param columnName columnName
      */

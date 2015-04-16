@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">Zhizhi</string>
+    <string name="app_name">吱吱</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="main_tab_zhizhi_text">吱吱</string>
+    <string name="main_tab_record_text">记录</string>
+    <string name="main_tab_message_text">消息</string>
+    <string name="main_tab_me_text">我</string>
 </resources>
