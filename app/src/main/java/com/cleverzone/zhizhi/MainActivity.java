@@ -21,6 +21,9 @@ import com.cleverzone.zhizhi.fragment.MessageFragment;
 import com.cleverzone.zhizhi.fragment.RecordFragment;
 import com.cleverzone.zhizhi.fragment.ZhizhiFragment;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -29,11 +32,13 @@ public class MainActivity extends ActionBarActivity {
 
     private ViewPager mViewPager;
     private Context mContext;
+    private HashMap<Integer, BaseFragment> fragmentMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fragmentMap = new HashMap<>();
         initAllViews();
     }
 
@@ -42,27 +47,65 @@ public class MainActivity extends ActionBarActivity {
         initViewPager();
     }
 
+    private class ColorEquationBean {
+        public int k;
+        public int b;
+    }
+
+    /***
+     * list contains params r, g, b
+     * @param startColorInt the changing color start value
+     * @param endColorInt the changing color end value
+     * @return ArrayList<ColorEquationBean>
+     */
+    private ArrayList<ColorEquationBean> getAllColorParams(int startColorInt, int endColorInt) {
+        ArrayList<ColorEquationBean> list = new ArrayList<>();
+        list.add(getEachColorParams(Color.red(startColorInt), Color.red(endColorInt)));
+        list.add(getEachColorParams(Color.green(startColorInt), Color.green(endColorInt)));
+        list.add(getEachColorParams(Color.blue(startColorInt), Color.blue(endColorInt)));
+        return list;
+    }
+
+    /***
+     * calculate equation's k and b about r or g or b from start to end
+     * @param start start r or g or b
+     * @param end end r or g or b
+     * @return ColorEquationBean
+     */
+    private ColorEquationBean getEachColorParams(int start, int end) {
+        ColorEquationBean colorEquationBean = new ColorEquationBean();
+        colorEquationBean.b = start;
+        colorEquationBean.k = end - colorEquationBean.b;
+        return colorEquationBean;
+    }
+
     private void initViewPager() {
         mViewPager = (ViewPager) findViewById(R.id.main_view_pager);
         mViewPager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager()));
         final TabStateBean tabStateBean = initTab();
         setTabSelected(0, tabStateBean);
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            private int mNormalColor = getResources().getColor(R.color.main_tab_text_normal_color);
+            private int mSelectedColor = getResources().getColor(R.color.main_tab_text_selected_color);
+
+            private ArrayList<ColorEquationBean> mColorEquationBeanArrayList = getAllColorParams(mSelectedColor, mNormalColor);
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 tabStateBean.ivNormalArray[position].setAlpha(positionOffset);
                 tabStateBean.ivSelectedArray[position].setAlpha(1 - positionOffset);
-                int normalR = (int) (84 * positionOffset + 69);
-                int normalG = (int) (-39 * positionOffset + 192);
-                int normalB = (int) (127 * positionOffset + 26);
-                tabStateBean.tvTabNameArray[position].setTextColor(Color.rgb(normalR, normalG, normalB));
+                int currentR = (int) (mColorEquationBeanArrayList.get(0).k * positionOffset + mColorEquationBeanArrayList.get(0).b);
+                int currentG = (int) (mColorEquationBeanArrayList.get(1).k * positionOffset + mColorEquationBeanArrayList.get(1).b);
+                int currentB = (int) (mColorEquationBeanArrayList.get(2).k * positionOffset + mColorEquationBeanArrayList.get(2).b);
+                tabStateBean.tvTabNameArray[position].setTextColor(Color.rgb(currentR, currentG, currentB));
                 if (position != MAX_TAB_COUNT - 1) {
-                    int selectedR = (int) (84 * (1 - positionOffset) + 69);
-                    int selectedG = (int) (-39 * (1 - positionOffset) + 192);
-                    int selectedB = (int) (127 * (1 - positionOffset) + 26);
+                    int nextR = (int) (mColorEquationBeanArrayList.get(0).k * (1 - positionOffset) + mColorEquationBeanArrayList.get(0).b);
+                    int nextG = (int) (mColorEquationBeanArrayList.get(1).k * (1 - positionOffset) + mColorEquationBeanArrayList.get(1).b);
+                    int nextB = (int) (mColorEquationBeanArrayList.get(2).k * (1 - positionOffset) + mColorEquationBeanArrayList.get(2).b);
                     tabStateBean.ivNormalArray[position + 1].setAlpha(1 - positionOffset);
                     tabStateBean.ivSelectedArray[position + 1].setAlpha(positionOffset);
-                    tabStateBean.tvTabNameArray[position + 1].setTextColor(Color.rgb(selectedR, selectedG, selectedB));
+                    tabStateBean.tvTabNameArray[position + 1].setTextColor(Color.rgb(nextR, nextG, nextB));
                 }
             }
 
@@ -158,16 +201,36 @@ public class MainActivity extends ActionBarActivity {
             BaseFragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = ZhizhiFragment.newInstance("", "");
+                    if (fragmentMap.containsKey(position)) {
+                        fragment = fragmentMap.get(position);
+                    } else {
+                        fragment = ZhizhiFragment.newInstance("", "");
+                        fragmentMap.put(position, fragment);
+                    }
                     break;
                 case 1:
-                    fragment = RecordFragment.newInstance("", "");
+                    if (fragmentMap.containsKey(position)) {
+                        fragment = fragmentMap.get(position);
+                    } else {
+                        fragment = RecordFragment.newInstance("", "");
+                        fragmentMap.put(position, fragment);
+                    }
                     break;
                 case 2:
-                    fragment = MessageFragment.newInstance("", "");
+                    if (fragmentMap.containsKey(position)) {
+                        fragment = fragmentMap.get(position);
+                    } else {
+                        fragment = MessageFragment.newInstance("", "");
+                        fragmentMap.put(position, fragment);
+                    }
                     break;
                 case 3:
-                    fragment = MeFragment.newInstance("", "");
+                    if (fragmentMap.containsKey(position)) {
+                        fragment = fragmentMap.get(position);
+                    } else {
+                        fragment = MeFragment.newInstance("", "");
+                        fragmentMap.put(position, fragment);
+                    }
                     break;
             }
             return fragment;
