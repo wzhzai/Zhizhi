@@ -2,13 +2,12 @@ package com.cleverzone.zhizhi;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,25 +24,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends FragmentActivity {
 
     private final static String TAG = "MainActivity";
     private final static int MAX_TAB_COUNT = 4;
 
     private ViewPager mViewPager;
     private Context mContext;
-    private HashMap<Integer, BaseFragment> fragmentMap;
+    private HashMap<Integer, BaseFragment> mFragmentMap;
+    private MainTitleBarController mTitleBarController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fragmentMap = new HashMap<>();
+        mFragmentMap = new HashMap<>();
         initAllViews();
     }
 
     private void initAllViews() {
         mContext = this;
+        mTitleBarController = new MainTitleBarController();
         initViewPager();
     }
 
@@ -79,6 +80,37 @@ public class MainActivity extends ActionBarActivity {
         return colorEquationBean;
     }
 
+    private class MainTitleBarController {
+
+        private ImageView mIvTitle;
+        private TextView mTvLeft;
+        private TextView mTvRight;
+
+        public MainTitleBarController() {
+            mIvTitle = (ImageView) findViewById(R.id.main_title_center_bottom);
+            mTvLeft = (TextView) findViewById(R.id.main_title_left_bottom);
+            mTvRight = (TextView) findViewById(R.id.main_title_right_bottom);
+        }
+
+        public void pageChanged(int position) {
+            switch (position) {
+                case 0:
+                    mIvTitle.setImageResource(R.mipmap.title_bar_icon_zhizhi);
+                    break;
+                case 1:
+                    mIvTitle.setImageResource(R.mipmap.title_bar_icon_record);
+                    break;
+                case 2:
+                    mIvTitle.setImageResource(R.mipmap.title_bar_icon_message);
+                    break;
+                case 3:
+                    mIvTitle.setImageResource(R.mipmap.title_bar_icon_me);
+                    break;
+            }
+        }
+
+    }
+
     private void initViewPager() {
         mViewPager = (ViewPager) findViewById(R.id.main_view_pager);
         mViewPager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager()));
@@ -112,6 +144,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onPageSelected(int position) {
                 setTabSelected(position, tabStateBean);
+                mTitleBarController.pageChanged(position);
             }
 
             @Override
@@ -201,35 +234,35 @@ public class MainActivity extends ActionBarActivity {
             BaseFragment fragment = null;
             switch (position) {
                 case 0:
-                    if (fragmentMap.containsKey(position)) {
-                        fragment = fragmentMap.get(position);
+                    if (mFragmentMap.containsKey(position)) {
+                        fragment = mFragmentMap.get(position);
                     } else {
                         fragment = ZhizhiFragment.newInstance("", "");
-                        fragmentMap.put(position, fragment);
+                        mFragmentMap.put(position, fragment);
                     }
                     break;
                 case 1:
-                    if (fragmentMap.containsKey(position)) {
-                        fragment = fragmentMap.get(position);
+                    if (mFragmentMap.containsKey(position)) {
+                        fragment = mFragmentMap.get(position);
                     } else {
                         fragment = RecordFragment.newInstance("", "");
-                        fragmentMap.put(position, fragment);
+                        mFragmentMap.put(position, fragment);
                     }
                     break;
                 case 2:
-                    if (fragmentMap.containsKey(position)) {
-                        fragment = fragmentMap.get(position);
+                    if (mFragmentMap.containsKey(position)) {
+                        fragment = mFragmentMap.get(position);
                     } else {
                         fragment = MessageFragment.newInstance("", "");
-                        fragmentMap.put(position, fragment);
+                        mFragmentMap.put(position, fragment);
                     }
                     break;
                 case 3:
-                    if (fragmentMap.containsKey(position)) {
-                        fragment = fragmentMap.get(position);
+                    if (mFragmentMap.containsKey(position)) {
+                        fragment = mFragmentMap.get(position);
                     } else {
                         fragment = MeFragment.newInstance("", "");
-                        fragmentMap.put(position, fragment);
+                        mFragmentMap.put(position, fragment);
                     }
                     break;
             }
