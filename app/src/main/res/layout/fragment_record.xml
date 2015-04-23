@@ -4,10 +4,6 @@
     android:layout_height="match_parent"
     tools:context="com.cleverzone.zhizhi.fragment.RecordFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/main_tab_record_text" />
+    <include layout="@layout/popupwindow_calendar" />
 
 </FrameLayout>
