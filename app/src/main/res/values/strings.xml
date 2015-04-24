@@ -7,5 +7,9 @@
     <string name="main_tab_record_text">记录</string>
     <string name="main_tab_message_text">消息</string>
     <string name="main_tab_me_text">我</string>
+    <string name="record_makeup_text">化妆品</string>
+    <string name="record_food_text">食品</string>
+    <string name="record_medicine_text">药品</string>
+    <string name="record_others_text">其他</string>
 
 </resources>

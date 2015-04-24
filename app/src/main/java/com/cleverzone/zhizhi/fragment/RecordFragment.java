@@ -75,8 +75,11 @@ public class RecordFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initCalendar(view);
 
+    }
 
+    private void initCalendar(View view) {
         final TextView popupwindow_calendar_month = (TextView) view
                 .findViewById(R.id.popupwindow_calendar_month);
         final KCalendar calendar = (KCalendar) view
@@ -156,6 +159,5 @@ public class RecordFragment extends BaseFragment {
                         calendar.nextMonth();
                     }
                 });
-
     }
 }

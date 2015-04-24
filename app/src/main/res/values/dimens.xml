@@ -10,4 +10,10 @@
     <dimen name="zhizhi_list_item_padding_left_right">20dp</dimen>
 
     <dimen name="historyscore_tb">10dp</dimen>
+    <dimen name="record_icon_text_margin">18dp</dimen>
+    <dimen name="record_each_item_padding_left_right">13dp</dimen>
+    <dimen name="record_each_item_margin_left_right">1dp</dimen>
+    <dimen name="record_each_item_margin_top">2dp</dimen>
+    <dimen name="record_recent_hint_margin_right">14dp</dimen>
+    <dimen name="record_each_item_padding_top_bottom">5dp</dimen>
 </resources>

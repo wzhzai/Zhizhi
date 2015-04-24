@@ -1,9 +1,223 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/record_main_background_color"
+    android:orientation="vertical"
     tools:context="com.cleverzone.zhizhi.fragment.RecordFragment">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
     <include layout="@layout/popupwindow_calendar" />
 
-</FrameLayout>
+    <RelativeLayout
+        android:id="@+id/record_makeup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/record_each_item_margin_left_right"
+        android:layout_marginRight="@dimen/record_each_item_margin_left_right"
+        android:paddingLeft="@dimen/record_each_item_padding_left_right"
+        android:paddingRight="@dimen/record_each_item_padding_left_right"
+        android:paddingTop="@dimen/record_each_item_padding_top_bottom"
+        android:paddingBottom="@dimen/record_each_item_padding_top_bottom"
+        android:background="@drawable/record_item_shape"
+        >
+
+        <ImageView
+            android:id="@+id/record_makeup_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_makeup"
+            />
+
+        <TextView
+            android:layout_toRightOf="@id/record_makeup_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/record_icon_text_margin"
+            android:text="@string/record_makeup_text"
+            />
+
+        <ImageView
+            android:id="@+id/record_makeup_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_arrow_right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:id="@+id/record_makeup_recent_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="最近质保期提醒 10天"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/record_makeup_arrow"
+            android:layout_marginRight="@dimen/record_recent_hint_margin_right"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/record_food"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/record_each_item_margin_left_right"
+        android:layout_marginRight="@dimen/record_each_item_margin_left_right"
+        android:layout_marginTop="@dimen/record_each_item_margin_top"
+        android:paddingLeft="@dimen/record_each_item_padding_left_right"
+        android:paddingRight="@dimen/record_each_item_padding_left_right"
+        android:paddingTop="@dimen/record_each_item_padding_top_bottom"
+        android:paddingBottom="@dimen/record_each_item_padding_top_bottom"
+        android:background="@drawable/record_item_shape"
+        >
+
+        <ImageView
+            android:id="@+id/record_food_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_food"
+            />
+
+        <TextView
+            android:layout_toRightOf="@id/record_food_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/record_icon_text_margin"
+            android:text="@string/record_food_text"
+            />
+
+        <ImageView
+            android:id="@+id/record_food_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_arrow_right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:id="@+id/record_food_recent_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="最近质保期提醒 10天"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/record_food_arrow"
+            android:layout_marginRight="@dimen/record_recent_hint_margin_right"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/record_medicine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/record_each_item_margin_left_right"
+        android:layout_marginRight="@dimen/record_each_item_margin_left_right"
+        android:layout_marginTop="@dimen/record_each_item_margin_top"
+        android:paddingLeft="@dimen/record_each_item_padding_left_right"
+        android:paddingRight="@dimen/record_each_item_padding_left_right"
+        android:paddingTop="@dimen/record_each_item_padding_top_bottom"
+        android:paddingBottom="@dimen/record_each_item_padding_top_bottom"
+        android:background="@drawable/record_item_shape"
+        >
+
+        <ImageView
+            android:id="@+id/record_medicine_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_medicine"
+            />
+
+        <TextView
+            android:layout_toRightOf="@id/record_medicine_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/record_icon_text_margin"
+            android:text="@string/record_medicine_text"
+            />
+
+        <ImageView
+            android:id="@+id/record_medicine_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_arrow_right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:id="@+id/record_medicine_recent_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="最近质保期提醒 10天"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/record_medicine_arrow"
+            android:layout_marginRight="@dimen/record_recent_hint_margin_right"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/record_others"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/record_each_item_margin_left_right"
+        android:layout_marginRight="@dimen/record_each_item_margin_left_right"
+        android:layout_marginTop="@dimen/record_each_item_margin_top"
+        android:paddingLeft="@dimen/record_each_item_padding_left_right"
+        android:paddingRight="@dimen/record_each_item_padding_left_right"
+        android:paddingTop="@dimen/record_each_item_padding_top_bottom"
+        android:paddingBottom="@dimen/record_each_item_padding_top_bottom"
+        android:background="@drawable/record_item_shape"
+        >
+
+        <ImageView
+            android:id="@+id/record_others_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_others"
+            />
+
+        <TextView
+            android:layout_toRightOf="@id/record_others_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/record_icon_text_margin"
+            android:text="@string/record_others_text"
+            />
+
+        <ImageView
+            android:id="@+id/record_others_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_arrow_right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:id="@+id/record_others_recent_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="最近质保期提醒 10天"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/record_others_arrow"
+            android:layout_marginRight="@dimen/record_recent_hint_margin_right"
+            />
+
+    </RelativeLayout>
+</LinearLayout>
+
+</ScrollView>

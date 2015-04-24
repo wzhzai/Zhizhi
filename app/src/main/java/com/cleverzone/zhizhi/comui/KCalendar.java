@@ -27,13 +27,13 @@ import java.util.List;
 import java.util.Map;
 
 public class KCalendar extends ViewFlipper {
-    public static final int COLOR_BG_WEEK_TITLE = Color.parseColor("#ffeeeeee"); // 星期标题背景颜色
+    public static final int COLOR_BG_WEEK_TITLE = Color.parseColor("#F9E5EB"); // 星期标题背景颜色
     public static final int COLOR_TX_WEEK_TITLE = Color.parseColor("#ffcc3333"); // 星期标题文字颜色
     public static final int COLOR_TX_THIS_MONTH_DAY = Color.parseColor("#aa564b4b"); // 当前月日历数字颜色
-    public static final int COLOR_TX_OTHER_MONTH_DAY = Color.parseColor("#ffcccccc"); // 其他月日历数字颜色
+    public static final int COLOR_TX_OTHER_MONTH_DAY = Color.parseColor("#cccccc"); // 其他月日历数字颜色
     public static final int COLOR_TX_THIS_DAY = Color.parseColor("#ff008000"); // 当天日历数字颜色
     public static final int COLOR_BG_THIS_DAY = Color.parseColor("#ffcccccc"); // 当天日历背景颜色
-    public static final int COLOR_BG_CALENDAR = Color.parseColor("#ffeeeeee"); // 日历背景色
+    public static final int COLOR_BG_CALENDAR = Color.parseColor("#F9E5EB"); // 日历背景色
     public static final int ANIM_DURATION = 400;
 
     private Animation push_left_in; // 动画-左进
@@ -73,8 +73,8 @@ public class KCalendar extends ViewFlipper {
 
     public KCalendar(Context context) {
         super(context);
-        init();
-    }
+		init();
+	}
 
     private void init() {
         setBackgroundColor(COLOR_BG_CALENDAR);
@@ -121,7 +121,8 @@ public class KCalendar extends ViewFlipper {
                 0.5f);
         Resources res = getResources();
         tb = res.getDimension(R.dimen.historyscore_tb);
-        layout.setMargins(0, 0, 0, (int) (tb * 1.2));
+        layout.setMargins(0, 0, 0, 0);
+//        setPadding(0, 0, 0, (int) (tb * 1.2));
         title.setLayoutParams(layout);
         oneCalendar.addView(title);
 
@@ -132,7 +133,7 @@ public class KCalendar extends ViewFlipper {
             view.setText(weekday[i]);
             view.setTextColor(COLOR_TX_WEEK_TITLE);
             view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-            view.setLayoutParams(new LinearLayout.LayoutParams(0, -1, 1));
+            view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1));
             title.addView(view);
         }
 
@@ -414,8 +415,8 @@ public class KCalendar extends ViewFlipper {
         }
         calendarday = new Date(calendarYear - 1900, calendarMonth, 1);
         setCalendarDate();
-        showPrevious();
-        if (onCalendarDateChangedListener != null) {
+		showPrevious();
+		if (onCalendarDateChangedListener != null) {
             onCalendarDateChangedListener.onCalendarDateChanged(calendarYear,
                     calendarMonth + 1);
         }
@@ -443,7 +444,7 @@ public class KCalendar extends ViewFlipper {
      */
     public void addMark(Date date, int id) {
         addMark(format(date), id);
-    }
+	}
 
     /**
      * 在日历上做一个标记
@@ -480,21 +481,21 @@ public class KCalendar extends ViewFlipper {
             marksMap.put(date.get(i), id);
         }
         setCalendarDate();
-    }
+	}
 
     /**
      * 移除日历上的标记
      */
     public void removeMark(Date date) {
         removeMark(format(date));
-    }
+	}
 
     /**
      * 移除日历上的标记
      */
     public void removeMark(String date) {
         marksMap.remove(date);
-        setCalendarDate();
+		setCalendarDate();
     }
 
     /**
@@ -523,8 +524,8 @@ public class KCalendar extends ViewFlipper {
      */
     public void setCalendarDayBgColor(String date, int color) {
         dayBgColorMap.put(date, color);
-        setCalendarDate();
-    }
+		setCalendarDate();
+	}
 
     /**
      * 设置日历一组日期的背景色
@@ -550,7 +551,7 @@ public class KCalendar extends ViewFlipper {
             dayBgColorMap.put(date[i], color);
         }
         setCalendarDate();
-    }
+	}
 
     /**
      * 移除日历具体某个日期的背景色
