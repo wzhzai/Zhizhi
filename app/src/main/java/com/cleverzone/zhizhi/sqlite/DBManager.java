@@ -85,15 +85,12 @@ public class DBManager {
     }
 
     public void getAllProductInfoByMainClassify(String mainClassify) {
-        String subClassifySql = "select distinct sub_classify from record where main_classify = ? order by sub_classify desc";
-        Cursor subClassifyCursor = db.rawQuery(subClassifySql, new String[]{mainClassify});
-        ArrayList<String> subClassifyList = new ArrayList<>();
-        while (subClassifyCursor.moveToNext()) {
-            subClassifyList.add(subClassifyCursor.getString(0));
-        }
-        subClassifyCursor.close();
+        ArrayList<String> subClassifyList = getAllSubClassifyByMainClassify(mainClassify);
         LinkedHashMap<String, ArrayList<String>> allInfoMap = new LinkedHashMap<>();
         for (String sub : subClassifyList) {
+            if (sub.equals("")) {
+                sub = "未分类";
+            }
             String allInfoSql = "select name from record where main_classify = ? and sub_classify= ?";
             Cursor allInfoCursor = db.rawQuery(allInfoSql, new String[]{mainClassify, sub});
             while (allInfoCursor.moveToNext()) {
@@ -108,6 +105,17 @@ public class DBManager {
             allInfoCursor.close();
         }
         Log.e(TAG, "result=" + allInfoMap);
+    }
+
+    private ArrayList<String> getAllSubClassifyByMainClassify(String mainClassify) {
+        String subClassifySql = "select distinct sub_classify from record where main_classify = ? order by sub_classify desc";
+        Cursor subClassifyCursor = db.rawQuery(subClassifySql, new String[]{mainClassify});
+        ArrayList<String> subClassifyList = new ArrayList<>();
+        while (subClassifyCursor.moveToNext()) {
+            subClassifyList.add(subClassifyCursor.getString(0));
+        }
+        subClassifyCursor.close();
+        return subClassifyList;
     }
 
     public static synchronized DBManager getInstance(Context context) {
