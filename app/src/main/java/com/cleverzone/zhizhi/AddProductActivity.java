@@ -15,7 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.cleverzone.zhizhi.bean.ProductBean;
-import com.cleverzone.zhizhi.sqlite.DBManage;
+import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Const;
 
 import java.text.SimpleDateFormat;
@@ -42,9 +42,9 @@ public class AddProductActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = this;
         mMainClassifyResId = Const.RECORD_CLASSIFIES_TEXT[getIntent().getIntExtra("which", 0)];
         setContentView(R.layout.activity_add_product);
+        mContext = this;
         setTitle(R.mipmap.title_bar_icon_record);
         initAllViews();
     }
@@ -89,7 +89,7 @@ public class AddProductActivity extends BaseActivity {
                 productBean.count = Integer.parseInt(mEtQuantity.getText().toString());
                 productBean.mainClassify = mContext.getString(mMainClassifyResId);
                 productBean.subClassify = mEtClassify.getText().toString();
-                DBManage.getInstance(mContext).saveProduct(productBean);
+                DBManager.getInstance(mContext).saveProduct(productBean);
                 Toast.makeText(mContext, getString(R.string.product_add_success), Toast.LENGTH_SHORT).show();
                 finish();
             }

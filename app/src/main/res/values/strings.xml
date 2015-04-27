@@ -31,5 +31,6 @@
         <item>药品</item>
         <item>其他</item>
     </array>
+    <string name="title_activity_record_item_detail">RecordItemDetail</string>
 
 </resources>

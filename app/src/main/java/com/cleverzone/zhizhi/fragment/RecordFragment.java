@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.cleverzone.zhizhi.AddProductActivity;
 import com.cleverzone.zhizhi.R;
+import com.cleverzone.zhizhi.RecordItemDetail;
 import com.cleverzone.zhizhi.comui.ClassifyChooseDialog;
 import com.cleverzone.zhizhi.comui.KCalendar;
 
@@ -96,9 +97,26 @@ public class RecordFragment extends BaseFragment {
                 new ClassifyChooseDialog(mContext).show();
             }
         });
+        ArrayList<View> itemList = new ArrayList<>();
+        itemList.add(view.findViewById(R.id.record_makeup));
+        itemList.add(view.findViewById(R.id.record_food));
+        itemList.add(view.findViewById(R.id.record_medicine));
+        itemList.add(view.findViewById(R.id.record_others));
+        for (int i = 0; i < itemList.size(); i++) {
+            setEachItemClickListener(itemList.get(i), i);
+        }
     }
 
-    private void createClassifyChooseDialog() {
+    private void setEachItemClickListener(View view, final int which) {
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, RecordItemDetail.class);
+                intent.putExtra("which", which);
+                startActivity(intent);
+            }
+        };
+        view.setOnClickListener(onClickListener);
     }
 
 

@@ -2,16 +2,24 @@ package com.cleverzone.zhizhi.sqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.cleverzone.zhizhi.bean.ProductBean;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 /**
  * Created by WANGZHENGZE on 2015/4/26.
  */
-public class DBManage {
+public class DBManager {
+
+    private static final String TAG = "DBManager";
+
     // database版本
     private final static int DB_VERSION = 1;
     // database名
@@ -19,13 +27,13 @@ public class DBManage {
 
     private Context context;
 
-    private static DBManage dbManage;
+    private static DBManager dbManager;
 
     private SQLiteDatabase db = null;
 
     private DataBaseHelper dbHelper = null;
 
-    private DBManage(Context context) {
+    private DBManager(Context context) {
         this.context = context;
     }
 
@@ -67,12 +75,47 @@ public class DBManage {
         db.insert("record", null, contentValues);
     }
 
-    public static synchronized DBManage getInstance(Context context) {
-        if (dbManage == null) {
-            dbManage = new DBManage(context);
-            dbManage.open();
+    public int getProductInfoCount(String mainClassify) {
+        String sql = "select count(_id) from record where main_classify = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{mainClassify});
+        cursor.moveToNext();
+        int count = cursor.getInt(0);
+        cursor.close();
+        return count;
+    }
+
+    public void getAllProductInfoByMainClassify(String mainClassify) {
+        String subClassifySql = "select distinct sub_classify from record where main_classify = ? order by sub_classify desc";
+        Cursor subClassifyCursor = db.rawQuery(subClassifySql, new String[]{mainClassify});
+        ArrayList<String> subClassifyList = new ArrayList<>();
+        while (subClassifyCursor.moveToNext()) {
+            subClassifyList.add(subClassifyCursor.getString(0));
         }
-        return dbManage;
+        subClassifyCursor.close();
+        LinkedHashMap<String, ArrayList<String>> allInfoMap = new LinkedHashMap<>();
+        for (String sub : subClassifyList) {
+            String allInfoSql = "select name from record where main_classify = ? and sub_classify= ?";
+            Cursor allInfoCursor = db.rawQuery(allInfoSql, new String[]{mainClassify, sub});
+            while (allInfoCursor.moveToNext()) {
+                if (allInfoMap.containsKey(sub)) {
+                    allInfoMap.get(sub).add(allInfoCursor.getString(0));
+                } else {
+                    ArrayList<String> arrayList = new ArrayList<>();
+                    arrayList.add(allInfoCursor.getString(0));
+                    allInfoMap.put(sub, arrayList);
+                }
+            }
+            allInfoCursor.close();
+        }
+        Log.e(TAG, "result=" + allInfoMap);
+    }
+
+    public static synchronized DBManager getInstance(Context context) {
+        if (dbManager == null) {
+            dbManager = new DBManager(context);
+            dbManager.open();
+        }
+        return dbManager;
     }
 
     public void open() throws SQLException {

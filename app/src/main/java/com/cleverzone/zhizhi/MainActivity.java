@@ -113,6 +113,7 @@ public class MainActivity extends FragmentActivity {
 
     private void initViewPager() {
         mViewPager = (ViewPager) findViewById(R.id.main_view_pager);
+        mViewPager.setOffscreenPageLimit(MAX_TAB_COUNT);
         mViewPager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager()));
         final TabStateBean tabStateBean = initTab();
         setTabSelected(0, tabStateBean);
