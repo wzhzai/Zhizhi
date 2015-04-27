@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingLeft="@dimen/record_each_item_padding_left_right"
+    android:paddingRight="@dimen/record_each_item_padding_left_right"
+    android:paddingTop="@dimen/record_each_item_padding_top_bottom"
+    android:paddingBottom="@dimen/record_each_item_padding_top_bottom"
+    android:background="@drawable/record_item_shape"
+    >
+
+    <ImageView
+        android:id="@+id/item_classify_choose_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_others"
+        />
+
+    <TextView
+        android:id="@+id/item_classify_choose_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/record_icon_text_margin"
+        android:text="@string/record_others_text"
+        android:textSize="@dimen/record_item_text_size"
+        />
+
+</LinearLayout>

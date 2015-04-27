@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".AddProductActivity"
+            android:label="@string/record_add_product_text" >
+        </activity>
     </application>
 
 </manifest>

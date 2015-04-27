@@ -16,4 +16,9 @@
     <dimen name="record_each_item_margin_top">2dp</dimen>
     <dimen name="record_recent_hint_margin_right">14dp</dimen>
     <dimen name="record_each_item_padding_top_bottom">5dp</dimen>
+    <dimen name="record_add_product_text_size">21sp</dimen>
+    <dimen name="record_add_product_padding_left_right">40dp</dimen>
+    <dimen name="record_item_text_size">20sp</dimen>
+    <dimen name="dialog_classify_choose_title_text_size">22sp</dimen>
+    <dimen name="dialog_classify_choose_title_padding_top_bottom">10dp</dimen>
 </resources>

@@ -11,5 +11,25 @@
     <string name="record_food_text">食品</string>
     <string name="record_medicine_text">药品</string>
     <string name="record_others_text">其他</string>
+    <string name="record_add_product_text">添加宝贝</string>
+    <string name="record_choose_classify_text">选择分类</string>
+    <string name="add_product_name_hint">宝贝名</string>
+    <string name="add_product_pr_hint">生产日期</string>
+    <string name="add_product_shelf_life_hint">保质期</string>
+    <string name="add_product_quantity_hint">数量</string>
+    <string name="add_product_position_hint">位置</string>
+    <string name="add_product_advance_hint">提前提醒（天）</string>
+    <string name="add_product_classify_hint">类型</string>
+    <string name="day">天</string>
+    <string name="month">月</string>
+    <string name="add_product_save_text">保存</string>
+    <string name="product_add_success">添加成功~</string>
+
+    <array name="record_classify">
+        <item>化妆品</item>
+        <item>食品</item>
+        <item>药品</item>
+        <item>其他</item>
+    </array>
 
 </resources>

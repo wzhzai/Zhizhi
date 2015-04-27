@@ -40,6 +40,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/record_icon_text_margin"
             android:text="@string/record_makeup_text"
+            android:textSize="@dimen/record_item_text_size"
             />
 
         <ImageView
@@ -92,6 +93,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/record_icon_text_margin"
             android:text="@string/record_food_text"
+            android:textSize="@dimen/record_item_text_size"
             />
 
         <ImageView
@@ -144,6 +146,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/record_icon_text_margin"
             android:text="@string/record_medicine_text"
+            android:textSize="@dimen/record_item_text_size"
             />
 
         <ImageView
@@ -196,6 +199,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/record_icon_text_margin"
             android:text="@string/record_others_text"
+            android:textSize="@dimen/record_item_text_size"
             />
 
         <ImageView
@@ -218,6 +222,21 @@
             />
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/record_bt_add_product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/record_add_product_text"
+        android:textColor="@android:color/white"
+        android:paddingTop="@dimen/record_each_item_padding_top_bottom"
+        android:background="@drawable/record_add_product_shape"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/record_add_product_text_size"
+        android:paddingLeft="@dimen/record_add_product_padding_left_right"
+        android:paddingRight="@dimen/record_add_product_padding_left_right"
+        />
+
 </LinearLayout>
 
 </ScrollView>

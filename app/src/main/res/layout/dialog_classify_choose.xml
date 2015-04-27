@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    >
+
+    <TextView
+        android:id="@+id/dialog_classify_choose_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_title_bar_background_color"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/dialog_classify_choose_title_text_size"
+        android:paddingTop="@dimen/dialog_classify_choose_title_padding_top_bottom"
+        android:paddingBottom="@dimen/dialog_classify_choose_title_padding_top_bottom"
+        android:gravity="center"
+        />
+
+    <ListView
+        android:id="@+id/dialog_classify_choose_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:listSelector="@color/zhizhi_top_background_color"
+        android:layout_marginLeft="@dimen/record_each_item_margin_left_right"
+        android:layout_marginRight="@dimen/record_each_item_margin_left_right"
+        android:layout_marginTop="@dimen/record_each_item_margin_left_right"
+        android:layout_marginBottom="@dimen/record_each_item_margin_left_right"
+        android:dividerHeight="@dimen/record_each_item_margin_left_right"
+        />
+
+</LinearLayout>

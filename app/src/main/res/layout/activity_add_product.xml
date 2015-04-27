@@ -1,0 +1,144 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.cleverzone.zhizhi.AddProductActivity">
+
+    <include layout="@layout/common_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_tab_text_selected_color"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_launcher"
+                    />
+                <EditText
+                    android:id="@+id/add_product_et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/add_product_name_hint"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+                <EditText
+                    android:id="@+id/add_product_et_pr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/add_product_pr_hint"
+                    android:cursorVisible="false"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <EditText
+                        android:id="@+id/add_product_et_shelf_lift"
+                        android:layout_weight="2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/add_product_shelf_life_hint"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"
+                        />
+                    <RadioGroup
+                        android:id="@+id/add_product_rg_shelf_lift"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        >
+                        <RadioButton
+                            android:id="@+id/add_product_radio_day"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/day"
+                            />
+                        <RadioButton
+                            android:id="@+id/add_product_radio_month"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/month"
+                            />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/add_product_et_quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/add_product_quantity_hint"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    />
+
+                <EditText
+                    android:id="@+id/add_product_et_position"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/add_product_position_hint"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    />
+
+                <EditText
+                    android:id="@+id/add_product_et_advance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/add_product_advance_hint"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    />
+
+                <EditText
+                    android:id="@+id/add_product_et_classify"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/add_product_classify_hint"
+                    android:singleLine="true"
+                    android:imeOptions="actionDone"
+                    />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/add_product_bt_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_product_save_text"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,8 +1,15 @@
 package com.cleverzone.zhizhi.fragment;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +17,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cleverzone.zhizhi.AddProductActivity;
 import com.cleverzone.zhizhi.R;
+import com.cleverzone.zhizhi.comui.ClassifyChooseDialog;
 import com.cleverzone.zhizhi.comui.KCalendar;
 
 import java.util.ArrayList;
@@ -22,14 +31,13 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class RecordFragment extends BaseFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "RecordFragment";
 
-    String mDate = null;
+    private Context mContext;
+    private String mDate = null;
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -76,8 +84,23 @@ public class RecordFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initCalendar(view);
+        initOtherViews(view);
 
     }
+
+    private void initOtherViews(View view) {
+        Button btAddProduct = (Button) view.findViewById(R.id.record_bt_add_product);
+        btAddProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ClassifyChooseDialog(mContext).show();
+            }
+        });
+    }
+
+    private void createClassifyChooseDialog() {
+    }
+
 
     private void initCalendar(View view) {
         final TextView popupwindow_calendar_month = (TextView) view
@@ -159,5 +182,17 @@ public class RecordFragment extends BaseFragment {
                         calendar.nextMonth();
                     }
                 });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume");
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mContext = activity;
     }
 }
