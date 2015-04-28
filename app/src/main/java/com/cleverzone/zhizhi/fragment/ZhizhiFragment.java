@@ -106,7 +106,7 @@ public class ZhizhiFragment extends BaseFragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_zhizhi_list, parent, false);
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_zhizhi, parent, false);
             }
 
             ImageView ivBigCycle = (ImageView) convertView.findViewById(R.id.zhizhi_item_big_cycle);

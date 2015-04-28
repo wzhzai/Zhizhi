@@ -10,10 +10,30 @@ public class ProductBean {
     public int shelfLifeDay = 0;
     public int shelfLifMonth = 0;
     public String exDate = "";
+    public String hintDate = "";
     public int count = 0;
     public String position = "";
     public int advance = 0;
     public String mainClassify = "";
     public String subClassify = "";
     public String backup = "";
+
+    @Override
+    public String toString() {
+        return "ProductBean{" +
+                "name='" + name + '\'' +
+                ", picPath='" + picPath + '\'' +
+                ", prDate='" + prDate + '\'' +
+                ", shelfLifeDay=" + shelfLifeDay +
+                ", shelfLifMonth=" + shelfLifMonth +
+                ", exDate='" + exDate + '\'' +
+                ", hintDate='" + hintDate + '\'' +
+                ", count=" + count +
+                ", position='" + position + '\'' +
+                ", advance=" + advance +
+                ", mainClassify='" + mainClassify + '\'' +
+                ", subClassify='" + subClassify + '\'' +
+                ", backup='" + backup + '\'' +
+                '}';
+    }
 }

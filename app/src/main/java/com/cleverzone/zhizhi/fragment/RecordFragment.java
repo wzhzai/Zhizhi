@@ -2,13 +2,12 @@ package com.cleverzone.zhizhi.fragment;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +15,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.cleverzone.zhizhi.AddProductActivity;
 import com.cleverzone.zhizhi.R;
 import com.cleverzone.zhizhi.RecordItemDetail;
 import com.cleverzone.zhizhi.comui.ClassifyChooseDialog;
 import com.cleverzone.zhizhi.comui.KCalendar;
+import com.cleverzone.zhizhi.sqlite.DBManager;
+import com.cleverzone.zhizhi.util.Const;
+import com.cleverzone.zhizhi.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,8 @@ public class RecordFragment extends BaseFragment {
 
     private String mParam1;
     private String mParam2;
+
+    private ArrayList<TextView> mHintTextViewList;
 
 
     /**
@@ -84,8 +88,10 @@ public class RecordFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mHintTextViewList = new ArrayList<>();
         initCalendar(view);
         initOtherViews(view);
+        Log.e(TAG, "onViewCreated");
 
     }
 
@@ -105,18 +111,32 @@ public class RecordFragment extends BaseFragment {
         for (int i = 0; i < itemList.size(); i++) {
             setEachItemClickListener(itemList.get(i), i);
         }
+
+        mHintTextViewList.add((TextView)view.findViewById(R.id.record_makeup_recent_hint));
+        mHintTextViewList.add((TextView) view.findViewById(R.id.record_food_recent_hint));
+        mHintTextViewList.add((TextView) view.findViewById(R.id.record_medicine_recent_hint));
+        mHintTextViewList.add((TextView) view.findViewById(R.id.record_others_recent_hint));
+
     }
 
     private void setEachItemClickListener(View view, final int which) {
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, RecordItemDetail.class);
-                intent.putExtra("which", which);
-                startActivity(intent);
+                if (countIsZero(which)) {
+                    Toast.makeText(mContext, "还没有记录哦~~", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(mContext, RecordItemDetail.class);
+                    intent.putExtra("which", which);
+                    startActivity(intent);
+                }
             }
         };
         view.setOnClickListener(onClickListener);
+    }
+
+    private boolean countIsZero(int which) {
+        return DBManager.getInstance(mContext).getProductInfoCount(mContext.getString(Const.RECORD_CLASSIFIES_TEXT[which])) == 0;
     }
 
 
@@ -206,7 +226,21 @@ public class RecordFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         Log.e(TAG, "onResume");
+        int index = 0;
+        for (int i : Const.RECORD_CLASSIFIES_TEXT) {
+            String mainClassify = mContext.getString(i);
+            String hintDate = DBManager.getInstance(mContext).getRecentHintDateByMainClassify(mainClassify);
+            if (TextUtils.isEmpty(hintDate)) {
+                mHintTextViewList.get(index).setText(mContext.getString(R.string.record_recent_hint_no_day_text));
+            } else {
+                int differentDay = Utils.getDayDifference(hintDate);
+                mHintTextViewList.get(index).setText(Html.fromHtml(mContext.getString(R.string.record_recent_hint_text, differentDay)));
+                Log.e(TAG, "differentDay = " + differentDay);
+            }
+            index ++;
+        }
     }
+
 
     @Override
     public void onAttach(Activity activity) {

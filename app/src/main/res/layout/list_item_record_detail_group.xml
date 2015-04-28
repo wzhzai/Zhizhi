@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout android:id="@+id/record_others"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/record_each_item_margin_left_right"
+    android:layout_marginRight="@dimen/record_each_item_margin_left_right"
+    android:layout_marginTop="@dimen/record_each_item_margin_top"
+    android:background="@drawable/record_detail_group_shape"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/record_detail_group_padding_top_bottom"
+    android:paddingBottom="@dimen/record_detail_group_padding_top_bottom"
+    android:paddingLeft="@dimen/record_each_item_padding_left_right"
+    android:paddingRight="@dimen/record_each_item_padding_left_right"
+    >
+
+    <TextView
+        android:id="@+id/record_detail_group_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="子分类"
+        android:layout_marginLeft="@dimen/record_icon_text_margin"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/record_item_text_size" />
+
+    <ImageView
+        android:id="@+id/record_detail_group_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/icon_arrow_right" />
+
+    <TextView
+        android:id="@+id/record_detail_group_recent_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/record_recent_hint_margin_right"
+        android:layout_toLeftOf="@id/record_detail_group_arrow"
+        android:text="最近质保期提醒 10天" />
+
+</RelativeLayout>

@@ -49,7 +49,7 @@ public class DBManager {
         public void onCreate(SQLiteDatabase db) {
             db.execSQL("create table record(_id integer primary key, name text, pic_path text, " +
                     "pr date, shelf_life_month int, shelf_life_day, ex date, count int, position text, advance int, main_classify text, " +
-                    "sub_classify text, backup text)");
+                    "sub_classify text, backup text, hint_date text)");
         }
 
         @Override
@@ -72,6 +72,7 @@ public class DBManager {
         contentValues.put("main_classify", bean.mainClassify);
         contentValues.put("sub_classify", bean.subClassify);
         contentValues.put("backup", bean.backup);
+        contentValues.put("hint_date", bean.hintDate);
         db.insert("record", null, contentValues);
     }
 
@@ -84,27 +85,68 @@ public class DBManager {
         return count;
     }
 
-    public void getAllProductInfoByMainClassify(String mainClassify) {
+    public LinkedHashMap<String, ArrayList<ProductBean>> getAllProductInfoByMainClassify(String mainClassify) {
         ArrayList<String> subClassifyList = getAllSubClassifyByMainClassify(mainClassify);
-        LinkedHashMap<String, ArrayList<String>> allInfoMap = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<ProductBean>> allInfoMap = new LinkedHashMap<>();
         for (String sub : subClassifyList) {
-            if (sub.equals("")) {
-                sub = "未分类";
-            }
-            String allInfoSql = "select name from record where main_classify = ? and sub_classify= ?";
+            String allInfoSql = "select * from record where main_classify = ? and sub_classify= ?";
             Cursor allInfoCursor = db.rawQuery(allInfoSql, new String[]{mainClassify, sub});
             while (allInfoCursor.moveToNext()) {
+                if (sub.isEmpty()) {
+                    sub = "未分类";
+                }
+                ProductBean bean = getAllProductInfoBean(allInfoCursor);
                 if (allInfoMap.containsKey(sub)) {
-                    allInfoMap.get(sub).add(allInfoCursor.getString(0));
+                    allInfoMap.get(sub).add(bean);
                 } else {
-                    ArrayList<String> arrayList = new ArrayList<>();
-                    arrayList.add(allInfoCursor.getString(0));
+                    ArrayList<ProductBean> arrayList = new ArrayList<>();
+                    arrayList.add(bean);
                     allInfoMap.put(sub, arrayList);
                 }
             }
             allInfoCursor.close();
         }
         Log.e(TAG, "result=" + allInfoMap);
+        return allInfoMap;
+    }
+
+    private ProductBean getAllProductInfoBean(Cursor allInfoCursor) {
+        ProductBean bean = new ProductBean();
+        bean.name = allInfoCursor.getString(allInfoCursor.getColumnIndex("name"));
+        bean.picPath = allInfoCursor.getString(allInfoCursor.getColumnIndex("pic_path"));
+        bean.prDate = allInfoCursor.getString(allInfoCursor.getColumnIndex("pr"));
+        bean.shelfLifMonth = allInfoCursor.getInt(allInfoCursor.getColumnIndex("shelf_life_month"));
+        bean.shelfLifeDay = allInfoCursor.getInt(allInfoCursor.getColumnIndex("shelf_life_day"));
+        bean.exDate = allInfoCursor.getString(allInfoCursor.getColumnIndex("ex"));
+        bean.count = allInfoCursor.getInt(allInfoCursor.getColumnIndex("count"));
+        bean.position = allInfoCursor.getString(allInfoCursor.getColumnIndex("position"));
+        bean.advance = allInfoCursor.getInt(allInfoCursor.getColumnIndex("advance"));
+        bean.mainClassify = allInfoCursor.getString(allInfoCursor.getColumnIndex("main_classify"));
+        bean.subClassify = allInfoCursor.getString(allInfoCursor.getColumnIndex("sub_classify"));
+        bean.backup = allInfoCursor.getString(allInfoCursor.getColumnIndex("backup"));
+        bean.hintDate = allInfoCursor.getString(allInfoCursor.getColumnIndex("hint_date"));
+        return bean;
+    }
+
+    public String getRecentHintDateByMainClassify(String mainClassify) {
+        String sql = "select min(hint_date) from record where main_classify = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{mainClassify});
+        cursor.moveToFirst();
+        String hintDate = cursor.getString(0);
+        cursor.close();
+        return hintDate;
+    }
+
+    public String getRecentHintDateByMainAndSubClassify(String mainClassify, String subClassify) {
+        if (subClassify.equals("未分类")) {
+            subClassify = "";
+        }
+        String sql = "select min(hint_date) from record where main_classify = ? and sub_classify = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{mainClassify, subClassify});
+        cursor.moveToFirst();
+        String hintDate = cursor.getString(0);
+        cursor.close();
+        return hintDate;
     }
 
     private ArrayList<String> getAllSubClassifyByMainClassify(String mainClassify) {

@@ -56,7 +56,7 @@
             android:id="@+id/record_makeup_recent_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="最近质保期提醒 10天"
+            android:text="@string/record_recent_hint_text"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/record_makeup_arrow"
             android:layout_marginRight="@dimen/record_recent_hint_margin_right"

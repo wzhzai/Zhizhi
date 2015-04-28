@@ -21,4 +21,20 @@
     <dimen name="record_item_text_size">20sp</dimen>
     <dimen name="dialog_classify_choose_title_text_size">22sp</dimen>
     <dimen name="dialog_classify_choose_title_padding_top_bottom">10dp</dimen>
+    <dimen name="add_product_padding_left_right">17dp</dimen>
+    <dimen name="add_product_image_bar_padding_left_right">12dp</dimen>
+    <dimen name="add_product_image_width_height">68dp</dimen>
+    <dimen name="add_product_middle_margin_top">17dp</dimen>
+    <dimen name="add_product_image_bar_margin_top">30dp</dimen>
+    <dimen name="add_product_middle_padding_left_right">10dp</dimen>
+    <dimen name="add_product_et_name_margin_left">15dp</dimen>
+    <dimen name="add_product_middle_padding_top_bottom">23dp</dimen>
+    <dimen name="add_product_et_padding_left_right">15dp</dimen>
+    <dimen name="record_detail_group_padding_top_bottom">10dp</dimen>
+    <dimen name="product_detail_child_padding_left_right">14dp</dimen>
+    <dimen name="record_detail_child_image_width_height">58dp</dimen>
+    <dimen name="record_detail_child_info_main_padding_left_right">5dp</dimen>
+    <dimen name="record_detail_child_info_inner_padding_left_right">13dp</dimen>
+    <dimen name="record_detail_child_fist_last_padding_top_bottom">15dp</dimen>
+    <dimen name="record_detail_child_divider_height">27dp</dimen>
 </resources>

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/record_main_background_color"
     tools:context="com.cleverzone.zhizhi.AddProductActivity">
 
     <include layout="@layout/common_title_bar" />
@@ -10,7 +11,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/main_tab_text_selected_color"
+        android:paddingLeft="@dimen/add_product_padding_left_right"
+        android:paddingRight="@dimen/add_product_padding_left_right"
         >
 
         <LinearLayout
@@ -22,18 +24,27 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/add_product_image_bar_padding_left_right"
+                android:paddingRight="@dimen/add_product_image_bar_padding_left_right"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/add_product_image_bar_margin_top"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/add_product_image_width_height"
+                    android:layout_height="@dimen/add_product_image_width_height"
                     android:src="@mipmap/ic_launcher"
+                    android:background="@drawable/add_product_image_shape"
+                    android:scaleType="centerCrop"
                     />
                 <EditText
                     android:id="@+id/add_product_et_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/add_product_name_hint"
+                    android:layout_marginLeft="@dimen/add_product_et_name_margin_left"
+                    android:paddingLeft="@dimen/add_product_et_padding_left_right"
+                    android:paddingRight="@dimen/add_product_et_padding_left_right"
                     android:singleLine="true"
                     android:imeOptions="actionNext"
                     />
@@ -42,13 +53,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
+                android:background="@drawable/add_product_middle_shape"
+                android:layout_marginTop="@dimen/add_product_middle_margin_top"
+                android:paddingLeft="@dimen/add_product_middle_padding_left_right"
+                android:paddingRight="@dimen/add_product_middle_padding_left_right"
+                android:paddingTop="@dimen/add_product_middle_padding_top_bottom"
+                android:paddingBottom="@dimen/add_product_middle_padding_top_bottom"
                 android:orientation="vertical">
                 <EditText
                     android:id="@+id/add_product_et_pr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/add_product_pr_hint"
+                    android:paddingLeft="@dimen/add_product_et_padding_left_right"
+                    android:paddingRight="@dimen/add_product_et_padding_left_right"
                     android:cursorVisible="false"
                     android:singleLine="true"
                     android:imeOptions="actionNext"
@@ -64,7 +82,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:hint="@string/add_product_shelf_life_hint"
+                        android:paddingLeft="@dimen/add_product_et_padding_left_right"
+                        android:paddingRight="@dimen/add_product_et_padding_left_right"
                         android:singleLine="true"
+                        android:inputType="number"
                         android:imeOptions="actionNext"
                         />
                     <RadioGroup
@@ -98,7 +119,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/add_product_quantity_hint"
+                    android:paddingLeft="@dimen/add_product_et_padding_left_right"
+                    android:paddingRight="@dimen/add_product_et_padding_left_right"
                     android:singleLine="true"
+                    android:inputType="number"
                     android:imeOptions="actionNext"
                     />
 
@@ -107,6 +131,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/add_product_position_hint"
+                    android:paddingLeft="@dimen/add_product_et_padding_left_right"
+                    android:paddingRight="@dimen/add_product_et_padding_left_right"
                     android:singleLine="true"
                     android:imeOptions="actionNext"
                     />
@@ -116,7 +142,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/add_product_advance_hint"
+                    android:paddingLeft="@dimen/add_product_et_padding_left_right"
+                    android:paddingRight="@dimen/add_product_et_padding_left_right"
                     android:singleLine="true"
+                    android:inputType="number"
                     android:imeOptions="actionNext"
                     />
 
@@ -125,6 +154,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/add_product_classify_hint"
+                    android:paddingLeft="@dimen/add_product_et_padding_left_right"
+                    android:paddingRight="@dimen/add_product_et_padding_left_right"
                     android:singleLine="true"
                     android:imeOptions="actionDone"
                     />

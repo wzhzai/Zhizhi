@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/record_main_background_color"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/product_detail_child_padding_left_right"
+    android:paddingRight="@dimen/product_detail_child_padding_left_right"
+    android:paddingTop="@dimen/record_detail_child_fist_last_padding_top_bottom"
+    android:paddingBottom="@dimen/record_detail_child_fist_last_padding_top_bottom"
+    >
+
+    <ImageView
+        android:id="@+id/record_detail_child_iv"
+        android:layout_width="@dimen/record_detail_child_image_width_height"
+        android:layout_height="@dimen/record_detail_child_image_width_height"
+        android:background="@drawable/add_product_image_shape"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/record_detail_child_image_width_height"
+        android:paddingLeft="@dimen/record_detail_child_info_main_padding_left_right"
+        android:paddingRight="@dimen/record_detail_child_info_main_padding_left_right"
+        >
+
+        <ImageView
+            android:id="@+id/record_detail_child_iv_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:src="#8D8886"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/record_detail_child_iv_line"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/record_detail_child_info_inner_padding_left_right"
+            android:paddingRight="@dimen/record_detail_child_info_inner_padding_left_right"
+            >
+
+            <TextView
+                android:id="@+id/record_detail_child_tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商品名"
+                />
+
+            <TextView
+                android:id="@+id/record_detail_child_tv_pr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="生产日期：2015-04-28"
+                />
+
+            <TextView
+                android:id="@+id/record_detail_child_tv_ex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="有效期至：2016-04-27"
+                />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -15,6 +15,7 @@
     <string name="record_choose_classify_text">选择分类</string>
     <string name="add_product_name_hint">宝贝名</string>
     <string name="add_product_pr_hint">生产日期</string>
+    <string name="add_product_ex_hint">有效期至</string>
     <string name="add_product_shelf_life_hint">保质期</string>
     <string name="add_product_quantity_hint">数量</string>
     <string name="add_product_position_hint">位置</string>
@@ -24,13 +25,8 @@
     <string name="month">月</string>
     <string name="add_product_save_text">保存</string>
     <string name="product_add_success">添加成功~</string>
-
-    <array name="record_classify">
-        <item>化妆品</item>
-        <item>食品</item>
-        <item>药品</item>
-        <item>其他</item>
-    </array>
     <string name="title_activity_record_item_detail">RecordItemDetail</string>
+    <string name="record_recent_hint_text">最近质保期提醒 &lt;font color="#FF4040"&gt; %1$d&lt;/font&gt;天</string>
+    <string name="record_recent_hint_no_day_text">还没有宝贝哦</string>
 
 </resources>

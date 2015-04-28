@@ -36,7 +36,6 @@ public class AddProductActivity extends BaseActivity {
     private EditText mEtClassify;
     private Button mBtSave;
     private Calendar mChooseCalendar;
-    private SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
     private int mMainClassifyResId;
 
     @Override
@@ -83,9 +82,11 @@ public class AddProductActivity extends BaseActivity {
                     productBean.shelfLifMonth = Integer.parseInt(mEtShelfLife.getText().toString());
                     mChooseCalendar.add(Calendar.MONTH, productBean.shelfLifMonth);
                 }
-                productBean.exDate = mSimpleDateFormat.format(mChooseCalendar.getTime());
+                productBean.exDate = Const.NORMAL_SIMPLE_DATE_FORMAT.format(mChooseCalendar.getTime());
                 productBean.position = mEtPosition.getText().toString();
                 productBean.advance = Integer.parseInt(mEtAdvance.getText().toString());
+                mChooseCalendar.add(Calendar.DAY_OF_MONTH, productBean.advance);
+                productBean.hintDate = Const.NORMAL_SIMPLE_DATE_FORMAT.format(mChooseCalendar.getTime());
                 productBean.count = Integer.parseInt(mEtQuantity.getText().toString());
                 productBean.mainClassify = mContext.getString(mMainClassifyResId);
                 productBean.subClassify = mEtClassify.getText().toString();
@@ -107,7 +108,7 @@ public class AddProductActivity extends BaseActivity {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 mChooseCalendar = Calendar.getInstance();
                 mChooseCalendar.set(year, monthOfYear, dayOfMonth);
-                mEtPrDate.setText(mSimpleDateFormat.format(mChooseCalendar.getTime()));
+                mEtPrDate.setText(Const.NORMAL_SIMPLE_DATE_FORMAT.format(mChooseCalendar.getTime()));
                 mEtShelfLife.requestFocus();
             }
         }, year, month, day);
