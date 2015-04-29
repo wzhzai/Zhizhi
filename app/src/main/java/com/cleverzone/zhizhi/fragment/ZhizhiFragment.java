@@ -5,14 +5,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.cleverzone.zhizhi.R;
+import com.cleverzone.zhizhi.sqlite.DBManager;
+import com.cleverzone.zhizhi.util.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +33,8 @@ public class ZhizhiFragment extends BaseFragment {
     private String mParam1;
     private String mParam2;
     private Context mContext;
+    private ListView mListView;
+    private View mHeaderView;
 
 
     /**
@@ -77,13 +83,32 @@ public class ZhizhiFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ListView listView = (ListView) view.findViewById(R.id.zhizhi_list);
-        listView.addHeaderView(initHeaderView());
-        listView.setAdapter(new ZhizhiListAdapter());
+        mListView = (ListView) view.findViewById(R.id.zhizhi_list);
+        mListView.addHeaderView(initHeaderView());
+        mListView.setAdapter(new ZhizhiListAdapter());
     }
 
     private View initHeaderView() {
-        return LayoutInflater.from(mContext).inflate(R.layout.zhizhi_list_hint_header, null);
+        mHeaderView = LayoutInflater.from(mContext).inflate(R.layout.zhizhi_list_hint_header, null);
+        return mHeaderView;
+    }
+
+    private void setTopHintInfo() {
+        TextView tvDay = (TextView) mHeaderView.findViewById(R.id.zhizhi_top_day_hint_tv_number);
+        TextView tvHint = (TextView) mHeaderView.findViewById(R.id.zhizhi_top_day_hint_tv_normal);
+        String hintDate = DBManager.getInstance(mContext).getRecentHintDate();
+        if (TextUtils.isEmpty(hintDate)) {
+            tvHint.setText(R.string.zhizhi_top_day_hint_no_product);
+            tvDay.setVisibility(View.GONE);
+        } else {
+            tvDay.setText(Utils.getDayDifference(hintDate) + "天");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setTopHintInfo();
     }
 
     private class ZhizhiListAdapter extends BaseAdapter {

@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/title_bar_button_padding_left_right"
+        android:paddingRight="@dimen/title_bar_button_padding_left_right"
         android:textSize="@dimen/main_title_bar_button_text_size"
         android:text="左按钮" />
 
@@ -29,6 +31,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/title_bar_button_padding_left_right"
+        android:paddingRight="@dimen/title_bar_button_padding_left_right"
         android:textSize="@dimen/main_title_bar_button_text_size"
         android:text="右按钮" />
 

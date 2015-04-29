@@ -47,7 +47,6 @@
                     android:paddingRight="@dimen/add_product_et_padding_left_right"
                     android:singleLine="true"
                     android:imeOptions="actionNext"
-                    android:background="@null"
                     />
             </LinearLayout>
 
@@ -61,34 +60,58 @@
                 android:paddingTop="@dimen/add_product_middle_padding_top_bottom"
                 android:paddingBottom="@dimen/add_product_middle_padding_top_bottom"
                 android:orientation="vertical">
-                <EditText
-                    android:id="@+id/add_product_et_pr"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/add_product_pr_hint"
-                    android:paddingLeft="@dimen/add_product_et_padding_left_right"
-                    android:paddingRight="@dimen/add_product_et_padding_left_right"
-                    android:cursorVisible="false"
-                    android:singleLine="true"
-                    android:imeOptions="actionNext"
-                    />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     >
+
+                    <Spinner
+                        android:id="@+id/add_product_pr_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
                     <EditText
-                        android:id="@+id/add_product_et_shelf_lift"
+                        android:id="@+id/add_product_et_pr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:imeOptions="actionNext"
+                        android:paddingLeft="@dimen/add_product_et_padding_left_right"
+                        android:paddingRight="@dimen/add_product_et_padding_left_right"
+                        android:singleLine="true" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <LinearLayout
                         android:layout_weight="2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="@string/add_product_shelf_life_hint"
-                        android:paddingLeft="@dimen/add_product_et_padding_left_right"
-                        android:paddingRight="@dimen/add_product_et_padding_left_right"
-                        android:singleLine="true"
-                        android:inputType="number"
-                        android:imeOptions="actionNext"
-                        />
+                        android:orientation="horizontal"
+                        >
+
+                        <Spinner
+                            android:id="@+id/add_product_ex_spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+
+                        <EditText
+                            android:id="@+id/add_product_et_shelf_lift"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/add_product_et_padding_left_right"
+                            android:paddingRight="@dimen/add_product_et_padding_left_right"
+                            android:singleLine="true"
+                            android:inputType="number"
+                            android:imeOptions="actionNext"
+                            />
+                    </LinearLayout>
                     <RadioGroup
                         android:id="@+id/add_product_rg_shelf_lift"
                         android:layout_weight="1"
@@ -115,59 +138,142 @@
 
                 </LinearLayout>
 
-                <EditText
-                    android:id="@+id/add_product_et_quantity"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/add_product_quantity_hint"
-                    android:paddingLeft="@dimen/add_product_et_padding_left_right"
-                    android:paddingRight="@dimen/add_product_et_padding_left_right"
-                    android:singleLine="true"
-                    android:inputType="number"
-                    android:imeOptions="actionNext"
-                    />
+                    android:orientation="horizontal"
+                    >
 
-                <EditText
-                    android:id="@+id/add_product_et_position"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/add_product_position_hint"
-                    android:paddingLeft="@dimen/add_product_et_padding_left_right"
-                    android:paddingRight="@dimen/add_product_et_padding_left_right"
-                    android:singleLine="true"
-                    android:imeOptions="actionNext"
-                    />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_product_quantity_hint"
+                        android:textSize="@dimen/add_product_hint_text_size"
+                        />
 
-                <EditText
-                    android:id="@+id/add_product_et_advance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/add_product_advance_hint"
-                    android:paddingLeft="@dimen/add_product_et_padding_left_right"
-                    android:paddingRight="@dimen/add_product_et_padding_left_right"
-                    android:singleLine="true"
-                    android:inputType="number"
-                    android:imeOptions="actionNext"
-                    />
+                    <EditText
+                        android:id="@+id/add_product_et_quantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/add_product_et_padding_left_right"
+                        android:paddingRight="@dimen/add_product_et_padding_left_right"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:imeOptions="actionNext"
+                        />
 
-                <EditText
-                    android:id="@+id/add_product_et_classify"
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/add_product_classify_hint"
-                    android:paddingLeft="@dimen/add_product_et_padding_left_right"
-                    android:paddingRight="@dimen/add_product_et_padding_left_right"
-                    android:singleLine="true"
-                    android:imeOptions="actionDone"
-                    />
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_product_position_hint"
+                        android:textSize="@dimen/add_product_hint_text_size"
+                        />
+
+                    <EditText
+                        android:id="@+id/add_product_et_position"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/add_product_et_padding_left_right"
+                        android:paddingRight="@dimen/add_product_et_padding_left_right"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_product_advance_hint"
+                        android:textSize="@dimen/add_product_hint_text_size"
+                        />
+
+                    <EditText
+                        android:id="@+id/add_product_et_advance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/add_product_et_padding_left_right"
+                        android:paddingRight="@dimen/add_product_et_padding_left_right"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:imeOptions="actionNext"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_product_frequency_hint"
+                        android:textSize="@dimen/add_product_hint_text_size"
+                        />
+
+                    <EditText
+                        android:id="@+id/add_product_et_frequency"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/add_product_et_padding_left_right"
+                        android:paddingRight="@dimen/add_product_et_padding_left_right"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:imeOptions="actionNext"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_product_classify_hint"
+                        android:textSize="@dimen/add_product_hint_text_size"
+                        />
+
+                    <EditText
+                        android:id="@+id/add_product_et_classify"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/add_product_et_padding_left_right"
+                        android:paddingRight="@dimen/add_product_et_padding_left_right"
+                        android:singleLine="true"
+                        android:imeOptions="actionDone"
+                        />
+                </LinearLayout>
 
             </LinearLayout>
 
             <Button
-                android:id="@+id/add_product_bt_save"
-                android:layout_width="wrap_content"
+                android:id="@+id/add_product_bt_del"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/add_product_save_text"
+                android:text="@string/add_product_del_text"
+                android:paddingTop="@dimen/add_product_bt_del_padding_top_bottom"
+                android:paddingBottom="@dimen/add_product_bt_del_padding_top_bottom"
+                android:background="@color/add_product_bt_del_background_color"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/add_product_bt_del_text_size"
+                android:visibility="gone"
                 />
 
         </LinearLayout>

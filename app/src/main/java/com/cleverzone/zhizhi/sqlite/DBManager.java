@@ -73,7 +73,15 @@ public class DBManager {
         contentValues.put("sub_classify", bean.subClassify);
         contentValues.put("backup", bean.backup);
         contentValues.put("hint_date", bean.hintDate);
-        db.insert("record", null, contentValues);
+        if (bean.id == -1) {
+            db.insert("record", null, contentValues);
+        } else {
+            db.update("record", contentValues, "_id = ?", new String[]{String.valueOf(bean.id)});
+        }
+    }
+
+    public void deldetProduct(int id) {
+        db.delete("record", "_id = ?", new String[]{String.valueOf(id)});
     }
 
     public int getProductInfoCount(String mainClassify) {
@@ -112,6 +120,7 @@ public class DBManager {
 
     private ProductBean getAllProductInfoBean(Cursor allInfoCursor) {
         ProductBean bean = new ProductBean();
+        bean.id = allInfoCursor.getInt(allInfoCursor.getColumnIndex("_id"));
         bean.name = allInfoCursor.getString(allInfoCursor.getColumnIndex("name"));
         bean.picPath = allInfoCursor.getString(allInfoCursor.getColumnIndex("pic_path"));
         bean.prDate = allInfoCursor.getString(allInfoCursor.getColumnIndex("pr"));
@@ -137,6 +146,15 @@ public class DBManager {
         }
         cursor.close();
         return hintDateList;
+    }
+
+    public String getRecentHintDate() {
+        String sql = "select min(hint_date) from record";
+        Cursor cursor = db.rawQuery(sql, new String[]{});
+        cursor.moveToFirst();
+        String hintDate = cursor.getString(0);
+        cursor.close();
+        return hintDate;
     }
 
     public String getRecentHintDateByMainClassify(String mainClassify) {

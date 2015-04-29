@@ -9,4 +9,5 @@
     <color name="zhizhi_top_day_stroke_color">#D995B0</color>
     <color name="zhizhi_top_day_solid_color">#F9E5EB</color>
     <color name="record_main_background_color">#efefef</color>
+    <color name="add_product_bt_del_background_color">#FF4040</color>
 </resources>

@@ -1,5 +1,6 @@
 package com.cleverzone.zhizhi;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,22 +9,28 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cleverzone.zhizhi.bean.ProductBean;
 import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Const;
+import com.cleverzone.zhizhi.util.SoftInputController;
 
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
 
 
 public class AddProductActivity extends BaseActivity {
+
+    public static final int MODE_ADD = 0;
+    public static final int MODE_SHOW = 1;
 
     private Context mContext;
     private EditText mEtPrDate;
@@ -34,9 +41,14 @@ public class AddProductActivity extends BaseActivity {
     private EditText mEtPosition;
     private EditText mEtAdvance;
     private EditText mEtClassify;
-    private Button mBtSave;
+    private EditText mEtFrequency;
     private Calendar mChooseCalendar;
     private int mMainClassifyResId;
+    private Spinner mPrSpinner;
+    private Spinner mExSpinner;
+    private int mId = -1;
+    private Button mBtDel;
+    private ArrayList<View> mViewList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,34 +57,49 @@ public class AddProductActivity extends BaseActivity {
         setContentView(R.layout.activity_add_product);
         mContext = this;
         setTitle(R.mipmap.title_bar_icon_record);
+        mChooseCalendar = Calendar.getInstance();
+        mViewList = new ArrayList<>();
+        int mode = getIntent().getIntExtra("mode", MODE_ADD);
+        if (mode == MODE_SHOW) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        }
         initAllViews();
+        if (mode == MODE_SHOW) {
+            showInfo((ProductBean)getIntent().getSerializableExtra("bean"));
+            setEditButton();
+        } else {
+            setSaveButton();
+        }
+        setCancelButton();
     }
 
-    private void initAllViews() {
-        mEtPrDate = (EditText) findViewById(R.id.add_product_et_pr);
-        mEtPrDate.setInputType(InputType.TYPE_NULL);
-        mEtShelfLife = (EditText) findViewById(R.id.add_product_et_shelf_lift);
-        mEtPrDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+    private void setCancelButton() {
+        setLeftButton(R.string.cancel_text, new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    createDatePickDialog();
-                }
+            public void onClick(View v) {
+                finish();
             }
         });
-        mRgShelfLife = (RadioGroup) findViewById(R.id.add_product_rg_shelf_lift);
-        mRgShelfLife.check(R.id.add_product_radio_month);
-        mEtName = (EditText) findViewById(R.id.add_product_et_name);
-        mEtQuantity = (EditText) findViewById(R.id.add_product_et_quantity);
-        mEtPosition = (EditText) findViewById(R.id.add_product_et_position);
-        mEtAdvance = (EditText) findViewById(R.id.add_product_et_advance);
-        mEtClassify = (EditText) findViewById(R.id.add_product_et_classify);
-        mBtSave = (Button) findViewById(R.id.add_product_bt_save);
+    }
 
-        mBtSave.setOnClickListener(new View.OnClickListener() {
+    private void setEditButton() {
+        setRightButton(R.string.add_product_edit_text, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (View view : mViewList) {
+                    view.setEnabled(true);
+                }
+                setSaveButton();
+            }
+        });
+    }
+
+    private void setSaveButton() {
+        setRightButton(R.string.add_product_save_text, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ProductBean productBean = new ProductBean();
+                productBean.id = mId;
                 productBean.name = mEtName.getText().toString();
                 productBean.prDate = mEtPrDate.getText().toString();
                 if (mRgShelfLife.getCheckedRadioButtonId() == R.id.add_product_radio_day) {
@@ -95,6 +122,99 @@ public class AddProductActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+
+    private void showInfo(ProductBean bean) {
+        for (View view : mViewList) {
+            view.setEnabled(false);
+        }
+//        hideSoftInputDelay();
+        mId = bean.id;
+        mEtName.setText(bean.name);
+        mEtPrDate.setText(bean.prDate);
+        if (bean.shelfLifeDay != 0) {
+            mRgShelfLife.check(R.id.add_product_radio_day);
+            mEtShelfLife.setText(String.valueOf(bean.shelfLifeDay));
+        } else {
+            mEtShelfLife.setText(String.valueOf(bean.shelfLifMonth));
+        }
+        mEtQuantity.setText(String.valueOf(bean.count));
+        mEtPosition.setText(bean.position);
+        mEtAdvance.setText(String.valueOf(bean.advance));
+        mEtClassify.setText(bean.subClassify);
+        mBtDel.setVisibility(View.VISIBLE);
+        mBtDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(mContext).setTitle(R.string.add_product_del_text)
+                        .setMessage("确认要删除吗？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DBManager.getInstance(mContext).deldetProduct(mId);
+                        finish();
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
+            }
+        });
+
+    }
+
+    private void hideSoftInputDelay() {
+        mEtName.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SoftInputController.hideSoftInput(mContext, mEtName);
+            }
+        }, 100);
+    }
+
+    private void initAllViews() {
+        mBtDel = (Button) findViewById(R.id.add_product_bt_del);
+        mEtPrDate = (EditText) findViewById(R.id.add_product_et_pr);
+        mViewList.add(mEtPrDate);
+        mEtPrDate.setInputType(InputType.TYPE_NULL);
+        mEtShelfLife = (EditText) findViewById(R.id.add_product_et_shelf_lift);
+        mViewList.add(mEtShelfLife);
+        mEtPrDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    createDatePickDialog();
+                }
+            }
+        });
+        mRgShelfLife = (RadioGroup) findViewById(R.id.add_product_rg_shelf_lift);
+        mViewList.add(mRgShelfLife);
+        mViewList.add(findViewById(R.id.add_product_radio_day));
+        mViewList.add(findViewById(R.id.add_product_radio_month));
+        mRgShelfLife.check(R.id.add_product_radio_month);
+        mEtName = (EditText) findViewById(R.id.add_product_et_name);
+        mViewList.add(mEtName);
+        mEtQuantity = (EditText) findViewById(R.id.add_product_et_quantity);
+        mViewList.add(mEtQuantity);
+        mEtPosition = (EditText) findViewById(R.id.add_product_et_position);
+        mViewList.add(mEtPosition);
+        mEtAdvance = (EditText) findViewById(R.id.add_product_et_advance);
+        mViewList.add(mEtAdvance);
+        mEtFrequency = (EditText) findViewById(R.id.add_product_et_frequency);
+        mViewList.add(mEtFrequency);
+        mEtClassify = (EditText) findViewById(R.id.add_product_et_classify);
+        mViewList.add(mEtClassify);
+
+        String[] prs = getResources().getStringArray(R.array.add_product_pr_spinner);
+        mPrSpinner = (Spinner) findViewById(R.id.add_product_pr_spinner);
+        mViewList.add(mPrSpinner);
+        mPrSpinner.setAdapter(new ArrayAdapter<>(mContext, R.layout.spinner_item_add_product, prs));
+
+        String[] exs = getResources().getStringArray(R.array.add_product_ex_spinner);
+        mExSpinner = (Spinner) findViewById(R.id.add_product_ex_spinner);
+        mViewList.add(mExSpinner);
+        mExSpinner.setAdapter(new ArrayAdapter<>(mContext, R.layout.spinner_item_add_product, exs));
 
     }
 
@@ -106,7 +226,6 @@ public class AddProductActivity extends BaseActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                mChooseCalendar = Calendar.getInstance();
                 mChooseCalendar.set(year, monthOfYear, dayOfMonth);
                 mEtPrDate.setText(Const.NORMAL_SIMPLE_DATE_FORMAT.format(mChooseCalendar.getTime()));
                 mEtShelfLife.requestFocus();

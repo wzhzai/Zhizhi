@@ -20,13 +20,43 @@
     <string name="add_product_quantity_hint">数量</string>
     <string name="add_product_position_hint">位置</string>
     <string name="add_product_advance_hint">提前提醒（天）</string>
+    <string name="add_product_frequency_hint">提醒频率（次）</string>
     <string name="add_product_classify_hint">类型</string>
     <string name="day">天</string>
     <string name="month">月</string>
     <string name="add_product_save_text">保存</string>
+    <string name="add_product_edit_text">编辑</string>
+    <string name="add_product_del_text">删除</string>
+    <string name="cancel_text">返回</string>
     <string name="product_add_success">添加成功~</string>
     <string name="title_activity_record_item_detail">RecordItemDetail</string>
     <string name="record_recent_hint_text">最近质保期提醒 &lt;font color="#FF4040"&gt; %1$d&lt;/font&gt;天</string>
     <string name="record_recent_hint_no_day_text">还没有宝贝哦</string>
+    <string name="zhizhi_top_day_hint_text">距离质质提醒还有</string>
+    <string name="zhizhi_top_day_hint_no_product">亲爱的，你还木有添加需要质质提醒的宝贝哦！！</string>
+
+
+    <string-array name="add_product_pr_spinner">
+        <item>生产日期</item>
+        <item>开始日期</item>
+    </string-array>
+
+    <string-array name="add_product_ex_spinner">
+        <item>保质期</item>
+        <item>结束日期</item>
+    </string-array>
+
+    <string-array name="message_group_text">
+        <item>吱吱</item>
+        <item>小贴士</item>
+        <item>我的任务</item>
+    </string-array>
+
+    <string-array name="me_group_text">
+        <item>我的记录</item>
+        <item>我的收藏</item>
+        <item>我的金币</item>
+        <item>设置</item>
+    </string-array>
 
 </resources>

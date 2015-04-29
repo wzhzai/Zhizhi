@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/message_group"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/record_each_item_margin_left_right"
+    android:layout_marginRight="@dimen/record_each_item_margin_left_right"
+    android:layout_marginTop="@dimen/record_each_item_margin_top"
+    android:background="@drawable/record_item_shape"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/record_each_item_padding_top_bottom"
+    android:paddingLeft="@dimen/record_each_item_padding_left_right"
+    android:paddingRight="@dimen/record_each_item_padding_left_right"
+    android:paddingTop="@dimen/record_each_item_padding_top_bottom">
+
+    <ImageView
+        android:id="@+id/message_group_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_food" />
+
+    <TextView
+        android:id="@+id/message_group_tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/record_icon_text_margin"
+        android:layout_toRightOf="@id/message_group_iv"
+        android:textSize="@dimen/record_item_text_size" />
+
+    <ImageView
+        android:id="@+id/message_group_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/icon_arrow_right" />
+
+
+</RelativeLayout>

@@ -51,6 +51,7 @@ public class ClassifyChooseDialog extends AlertDialog {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mContext, AddProductActivity.class);
                 intent.putExtra("which", position);
+                intent.putExtra("mode", AddProductActivity.MODE_ADD);
                 mContext.startActivity(intent);
                 dismiss();
             }

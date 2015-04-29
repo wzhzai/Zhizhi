@@ -3,6 +3,7 @@ package com.cleverzone.zhizhi;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,13 +23,24 @@ public class BaseActivity extends Activity {
         ivTitle.setImageResource(resId);
     }
 
-    public void setLeftButton() {
-        TextView tvLeft = (TextView) findViewById(R.id.main_title_left_bottom);
+    public void setLeftButton(int resId, View.OnClickListener l) {
+        setLeftButton(getString(resId), l);
     }
 
-    public void setRightButton() {
-        TextView tvRight = (TextView) findViewById(R.id.main_title_right_bottom);
+    public void setLeftButton(String s, View.OnClickListener l) {
+        TextView tvLeft = (TextView) findViewById(R.id.main_title_left_bottom);
+        tvLeft.setText(s);
+        tvLeft.setOnClickListener(l);
+    }
 
+    public void setRightButton(int resId, View.OnClickListener l) {
+        setRightButton(getString(resId), l);
+    }
+
+    public void setRightButton(String s, View.OnClickListener l) {
+        TextView tvRight = (TextView) findViewById(R.id.main_title_right_bottom);
+        tvRight.setText(s);
+        tvRight.setOnClickListener(l);
     }
 
 }

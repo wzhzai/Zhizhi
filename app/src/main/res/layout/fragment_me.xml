@@ -1,13 +1,69 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.cleverzone.zhizhi.fragment.MeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout android:id="@+id/me_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/record_each_item_margin_left_right"
+        android:layout_marginRight="@dimen/record_each_item_margin_left_right"
+        android:layout_marginTop="@dimen/record_each_item_margin_top"
+        android:background="@drawable/record_item_shape"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/record_each_item_padding_top_bottom"
+        android:paddingLeft="@dimen/record_each_item_padding_left_right"
+        android:paddingRight="@dimen/record_each_item_padding_left_right"
+        android:paddingTop="@dimen/record_each_item_padding_top_bottom">
+
+        <ImageView
+            android:id="@+id/me_header_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_me_user_img" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:layout_toRightOf="@id/me_header_iv"
+            android:layout_marginLeft="@dimen/record_icon_text_margin"
+            >
+            <TextView
+                android:id="@+id/me_header_tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户名"
+                android:textSize="@dimen/record_item_text_size" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="我要记宝贝的保质期"
+                />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/me_header_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_arrow_right" />
+
+
+    </RelativeLayout>
+
+    <ExpandableListView
+        android:id="@+id/me_exp_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/main_tab_me_text" />
+        android:layout_marginTop="54dp"
+        android:groupIndicator="@null"
+        />
 
-</FrameLayout>
+</LinearLayout>

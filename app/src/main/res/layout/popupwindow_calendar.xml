@@ -27,6 +27,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:padding="10dp"
                 android:layout_toLeftOf="@+id/popupwindow_calendar_month" >
 
                 <ImageView
@@ -34,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/bt_calendar_last" />
             </RelativeLayout>
 
@@ -52,6 +53,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:padding="10dp"
                 android:layout_toRightOf="@+id/popupwindow_calendar_month" >
 
                 <ImageView
@@ -59,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:src="@drawable/bt_calendar_next" />
             </RelativeLayout>
         </RelativeLayout>

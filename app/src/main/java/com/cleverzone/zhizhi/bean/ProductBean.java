@@ -1,9 +1,12 @@
 package com.cleverzone.zhizhi.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by WANGZHENGZE on 2015/4/26.
  */
-public class ProductBean {
+public class ProductBean implements Serializable {
+    public int id = -1;
     public String name = "";
     public String picPath = "";
     public String prDate = "";
@@ -21,7 +24,8 @@ public class ProductBean {
     @Override
     public String toString() {
         return "ProductBean{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", picPath='" + picPath + '\'' +
                 ", prDate='" + prDate + '\'' +
                 ", shelfLifeDay=" + shelfLifeDay +
