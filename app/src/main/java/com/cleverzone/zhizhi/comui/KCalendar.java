@@ -629,6 +629,7 @@ public class KCalendar extends ViewFlipper {
                 markView.setImageResource(marksMap.get(dates[i][j]));
                 markView.setLayoutParams(params);
                 markView.setBackgroundResource(R.drawable.calendar_bg_tag);
+                group.setBackgroundColor(getContext().getResources().getColor(R.color.zhizhi_top_cycle_stroke_color));
                 group.addView(markView);
             }
         } else {

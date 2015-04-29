@@ -128,6 +128,17 @@ public class DBManager {
         return bean;
     }
 
+    public ArrayList<String> getAllRecentHintDate() {
+        String sql = "select hint_date from record";
+        Cursor cursor = db.rawQuery(sql, new String[]{});
+        ArrayList<String> hintDateList = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            hintDateList.add(cursor.getString(0));
+        }
+        cursor.close();
+        return hintDateList;
+    }
+
     public String getRecentHintDateByMainClassify(String mainClassify) {
         String sql = "select min(hint_date) from record where main_classify = ?";
         Cursor cursor = db.rawQuery(sql, new String[]{mainClassify});

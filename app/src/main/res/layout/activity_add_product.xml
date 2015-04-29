@@ -47,6 +47,7 @@
                     android:paddingRight="@dimen/add_product_et_padding_left_right"
                     android:singleLine="true"
                     android:imeOptions="actionNext"
+                    android:background="@null"
                     />
             </LinearLayout>
 
