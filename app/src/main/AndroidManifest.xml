@@ -19,12 +19,14 @@
         </activity>
         <activity
             android:name=".AddProductActivity"
-            android:label="@string/record_add_product_text" >
+            android:label="@string/record_add_product_text"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".RecordItemDetail"
             android:label="@string/title_activity_record_item_detail"
-            android:parentActivityName=".BaseActivity" >
+            android:parentActivityName=".BaseActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cleverzone.zhizhi.BaseActivity" />

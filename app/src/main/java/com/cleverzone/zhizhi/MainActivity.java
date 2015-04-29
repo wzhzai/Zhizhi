@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cleverzone.zhizhi.comui.ClassifyChooseDialog;
 import com.cleverzone.zhizhi.fragment.BaseFragment;
 import com.cleverzone.zhizhi.fragment.MeFragment;
 import com.cleverzone.zhizhi.fragment.MessageFragment;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends BaseActivity {
 
     private final static String TAG = "MainActivity";
     private final static int MAX_TAB_COUNT = 4;
@@ -33,6 +34,12 @@ public class MainActivity extends FragmentActivity {
     private Context mContext;
     private HashMap<Integer, BaseFragment> mFragmentMap;
     private MainTitleBarController mTitleBarController;
+    public View.OnClickListener mOnAddProductClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            new ClassifyChooseDialog(mContext).show();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,28 +90,32 @@ public class MainActivity extends FragmentActivity {
     private class MainTitleBarController {
 
         private ImageView mIvTitle;
-        private TextView mTvLeft;
-        private TextView mTvRight;
 
         public MainTitleBarController() {
             mIvTitle = (ImageView) findViewById(R.id.main_title_center_bottom);
-            mTvLeft = (TextView) findViewById(R.id.main_title_left_bottom);
-            mTvRight = (TextView) findViewById(R.id.main_title_right_bottom);
         }
 
         public void pageChanged(int position) {
             switch (position) {
                 case 0:
                     mIvTitle.setImageResource(R.mipmap.title_bar_icon_zhizhi);
+                    setLeftButtonHide();
+                    setRightButtonHide();
                     break;
                 case 1:
                     mIvTitle.setImageResource(R.mipmap.title_bar_icon_record);
+                    setRightButton(R.string.record_add_product_text, mOnAddProductClickListener);
+                    setLeftButtonHide();
                     break;
                 case 2:
                     mIvTitle.setImageResource(R.mipmap.title_bar_icon_message);
+                    setLeftButtonHide();
+                    setRightButtonHide();
                     break;
                 case 3:
                     mIvTitle.setImageResource(R.mipmap.title_bar_icon_me);
+                    setLeftButtonHide();
+                    setRightButtonHide();
                     break;
             }
         }
@@ -117,6 +128,8 @@ public class MainActivity extends FragmentActivity {
         mViewPager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager()));
         final TabStateBean tabStateBean = initTab();
         setTabSelected(0, tabStateBean);
+        setLeftButtonHide();
+        setRightButtonHide();
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             private int mNormalColor = getResources().getColor(R.color.main_tab_text_normal_color);

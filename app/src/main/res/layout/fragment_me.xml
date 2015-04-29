@@ -64,6 +64,8 @@
         android:layout_height="match_parent"
         android:layout_marginTop="54dp"
         android:groupIndicator="@null"
+        android:paddingLeft="@dimen/record_each_item_margin_left_right"
+        android:paddingRight="@dimen/record_each_item_margin_left_right"
         />
 
 </LinearLayout>

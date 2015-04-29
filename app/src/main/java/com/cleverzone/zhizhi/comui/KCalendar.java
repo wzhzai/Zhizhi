@@ -477,6 +477,7 @@ public class KCalendar extends ViewFlipper {
      * @param id   bitmap res id
      */
     public void addMarks(List<String> date, int id) {
+        marksMap.clear();
         for (int i = 0; i < date.size(); i++) {
             marksMap.put(date.get(i), id);
         }
@@ -620,25 +621,29 @@ public class KCalendar extends ViewFlipper {
         int childCount = group.getChildCount();
         if (marksMap.get(dates[i][j]) != null) {
             if (childCount < 2) {
+//                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+//                        (int) (tb * 0.7), (int) (tb * 0.7));
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        (int) (tb * 0.7), (int) (tb * 0.7));
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 params.setMargins(0, 0, 1, 1);
                 ImageView markView = new ImageView(getContext());
                 markView.setImageResource(marksMap.get(dates[i][j]));
                 markView.setLayoutParams(params);
-                markView.setBackgroundResource(R.drawable.calendar_bg_tag);
-                group.setBackgroundColor(getContext().getResources().getColor(R.color.zhizhi_top_cycle_stroke_color));
+//                markView.setBackgroundResource(R.drawable.calendar_bg_tag);
+                markView.setBackgroundColor(getContext().getResources().getColor(R.color.zhizhi_top_cycle_stroke_color));
+                markView.setAlpha(0.5f);
+//                group.setBackgroundColor(getContext().getResources().getColor(R.color.zhizhi_top_cycle_stroke_color));
                 group.addView(markView);
             } else {
-                group.setBackgroundColor(0);
+//                group.setBackgroundColor(0);
             }
         } else {
             if (childCount > 1) {
                 group.removeView(group.getChildAt(1));
             }
-            group.setBackgroundColor(0);
+//            group.setBackgroundColor(0);
         }
 
     }

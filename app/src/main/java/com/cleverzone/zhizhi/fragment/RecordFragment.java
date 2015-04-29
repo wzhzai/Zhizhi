@@ -97,14 +97,16 @@ public class RecordFragment extends BaseFragment {
 
     }
 
+    private View.OnClickListener mOnAddProductClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            new ClassifyChooseDialog(mContext).show();
+        }
+    };
+
     private void initOtherViews(View view) {
         Button btAddProduct = (Button) view.findViewById(R.id.record_bt_add_product);
-        btAddProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new ClassifyChooseDialog(mContext).show();
-            }
-        });
+        btAddProduct.setOnClickListener(mOnAddProductClickListener);
         ArrayList<View> itemList = new ArrayList<>();
         itemList.add(view.findViewById(R.id.record_makeup));
         itemList.add(view.findViewById(R.id.record_food));
