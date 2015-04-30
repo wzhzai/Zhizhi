@@ -2,10 +2,10 @@ package com.cleverzone.zhizhi.fragment;
 
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.cleverzone.zhizhi.R;
 import com.cleverzone.zhizhi.RecordItemDetail;
-import com.cleverzone.zhizhi.comui.ClassifyChooseDialog;
 import com.cleverzone.zhizhi.comui.KCalendar;
 import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Const;
@@ -100,7 +99,7 @@ public class RecordFragment extends BaseFragment {
     private View.OnClickListener mOnAddProductClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            new ClassifyChooseDialog(mContext).show();
+            Utils.addProductChooseClassify(mContext);
         }
     };
 

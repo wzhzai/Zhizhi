@@ -2,9 +2,9 @@ package com.cleverzone.zhizhi.fragment;
 
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cleverzone.zhizhi.R;
-import com.cleverzone.zhizhi.comui.ClassifyChooseDialog;
 import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Utils;
 
@@ -39,7 +38,7 @@ public class ZhizhiFragment extends BaseFragment {
     public View.OnClickListener mOnAddProductClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            new ClassifyChooseDialog(mContext).show();
+            Utils.addProductChooseClassify(mContext);
         }
     };
 

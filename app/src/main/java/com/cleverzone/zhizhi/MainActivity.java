@@ -4,22 +4,19 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cleverzone.zhizhi.comui.ClassifyChooseDialog;
 import com.cleverzone.zhizhi.fragment.BaseFragment;
 import com.cleverzone.zhizhi.fragment.MeFragment;
 import com.cleverzone.zhizhi.fragment.MessageFragment;
 import com.cleverzone.zhizhi.fragment.RecordFragment;
 import com.cleverzone.zhizhi.fragment.ZhizhiFragment;
+import com.cleverzone.zhizhi.util.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +34,7 @@ public class MainActivity extends BaseActivity {
     public View.OnClickListener mOnAddProductClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            new ClassifyChooseDialog(mContext).show();
+            Utils.addProductChooseClassify(mContext);
         }
     };
 
