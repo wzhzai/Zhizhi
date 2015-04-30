@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@mipmap/icon_arrow_right" />
+        android:src="@mipmap/icon_arrow_right_white" />
 
     <TextView
         android:id="@+id/record_detail_group_recent_hint"

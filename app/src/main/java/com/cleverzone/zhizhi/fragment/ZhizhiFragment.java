@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cleverzone.zhizhi.R;
+import com.cleverzone.zhizhi.comui.ClassifyChooseDialog;
 import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Utils;
 
@@ -35,6 +36,12 @@ public class ZhizhiFragment extends BaseFragment {
     private Context mContext;
     private ListView mListView;
     private View mHeaderView;
+    public View.OnClickListener mOnAddProductClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            new ClassifyChooseDialog(mContext).show();
+        }
+    };
 
 
     /**
@@ -100,8 +107,12 @@ public class ZhizhiFragment extends BaseFragment {
         if (TextUtils.isEmpty(hintDate)) {
             tvHint.setText(R.string.zhizhi_top_day_hint_no_product);
             tvDay.setVisibility(View.GONE);
+            ((View)tvHint.getParent()).setOnClickListener(mOnAddProductClickListener);
         } else {
+            tvHint.setText(R.string.zhizhi_top_day_hint_text);
             tvDay.setText(Utils.getDayDifference(hintDate) + "天");
+            tvDay.setVisibility(View.VISIBLE);
+            ((View)tvHint.getParent()).setOnClickListener(null);
         }
     }
 

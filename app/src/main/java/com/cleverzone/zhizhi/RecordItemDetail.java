@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,6 +75,18 @@ public class RecordItemDetail extends BaseActivity {
                 intent.putExtra("bean", mAllProductInfoMap.get(mGroupList.get(groupPosition)).get(childPosition));
                 mContext.startActivity(intent);
                 return true;
+            }
+        });
+        mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                ImageView iv = (ImageView) v.findViewById(R.id.record_detail_group_arrow);
+                if (parent.isGroupExpanded(groupPosition)) {
+                    iv.setImageResource(R.mipmap.icon_arrow_right_white);
+                } else {
+                    iv.setImageResource(R.mipmap.icon_arrow_down_white);
+                }
+                return false;
             }
         });
     }
@@ -161,28 +174,11 @@ public class RecordItemDetail extends BaseActivity {
     protected void onResume() {
         super.onResume();
         initData();
-        mDetailAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_record_item_detail, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (mGroupList.size() == 0) {
+            finish();
+        } else {
+            mDetailAdapter.notifyDataSetChanged();
         }
-
-        return super.onOptionsItemSelected(item);
     }
+
 }
