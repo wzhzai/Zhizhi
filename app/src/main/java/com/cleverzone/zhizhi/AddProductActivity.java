@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
@@ -14,11 +15,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cleverzone.zhizhi.bean.ProductBean;
+import com.cleverzone.zhizhi.capture.CaptureActivity;
 import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Const;
 import com.cleverzone.zhizhi.util.SoftInputController;
@@ -49,6 +52,7 @@ public class AddProductActivity extends BaseActivity {
     private int mId = -1;
     private Button mBtDel;
     private ArrayList<View> mViewList;
+    private ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,6 +179,15 @@ public class AddProductActivity extends BaseActivity {
 
     private void initAllViews() {
         mBtDel = (Button) findViewById(R.id.add_product_bt_del);
+        mImageView = (ImageView) findViewById(R.id.add_product_iv_image);
+        mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, CaptureActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
+        mViewList.add(mImageView);
         mEtPrDate = (EditText) findViewById(R.id.add_product_et_pr);
         mViewList.add(mEtPrDate);
         mEtPrDate.setInputType(InputType.TYPE_NULL);

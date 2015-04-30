@@ -44,4 +44,7 @@
     <dimen name="zhizhi_top_day_hint_main_margin_left">43dp</dimen>
     <dimen name="zhizhi_top_day_hint_main_padding_left">53dp</dimen>
     <dimen name="zhizhi_top_day_hint_main_padding_right">10dp</dimen>
+
+    <dimen name="standard_padding">8dip</dimen>
+    <dimen name="half_padding">4dip</dimen>
 </resources>

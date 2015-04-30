@@ -36,6 +36,21 @@
     <string name="zhizhi_top_day_hint_no_product">亲爱的，你还木有添加需要质质提醒的宝贝哦！！</string>
 
 
+    <string name="msg_default_format">格式</string>
+    <string name="msg_default_type">类型</string>
+    <string name="msg_default_time">时间</string>
+    <string name="msg_default_meta">元数据</string>
+    <string name="msg_default_status">请将条码置于取景框内扫描。  </string>
+    <string name="msg_default_mms_subject">Hi</string>
+    <string name="msg_intent_failed">抱歉，无法打开所需软件。 条码内容可能无效。</string>
+    <string name="button_ok">确定</string>
+    <string name="button_product_search">打开产品搜索</string>
+    <string name="button_web_search">网页搜索</string>
+    <string name="button_custom_product_search">自定义搜索</string>
+    <string name="result_product">找到产品</string>
+    <string name="msg_camera_framework_bug">抱歉，Android相机出现问题。您可能需要重启设备。</string>
+
+
     <string-array name="add_product_pr_spinner">
         <item>生产日期</item>
         <item>开始日期</item>
