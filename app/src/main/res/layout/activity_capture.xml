@@ -63,6 +63,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -84,6 +85,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -105,6 +107,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -126,6 +129,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -160,10 +164,8 @@
                         android:id="@+id/contents_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:autoLink="web"
                         android:paddingLeft="12dip"
-                        android:textColor="#f0f"
-                        android:textColorLink="@color/result_text"
+                        android:text="查找中，请稍后...."
                         android:textIsSelectable="true"
                         android:textSize="22sp" />
 
@@ -175,6 +177,7 @@
                         android:paddingLeft="12dip"
                         android:textColor="@color/result_text"
                         android:textColorLink="@color/result_text"
+                        android:visibility="gone"
                         android:textIsSelectable="true" />
 
                 </LinearLayout>

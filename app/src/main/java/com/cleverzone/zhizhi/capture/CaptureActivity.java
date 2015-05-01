@@ -33,9 +33,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -48,6 +45,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cleverzone.zhizhi.R;
+import com.cleverzone.zhizhi.bean.NetScanResult;
 import com.cleverzone.zhizhi.capture.camera.CameraManager;
 import com.cleverzone.zhizhi.capture.result.ResultButtonListener;
 import com.cleverzone.zhizhi.capture.result.ResultHandler;
@@ -80,7 +78,7 @@ import java.util.Map;
  * @author dswitkin@google.com (Daniel Switkin)
  * @author Sean Owen
  */
-public final class CaptureActivity extends Activity implements SurfaceHolder.Callback {
+public final class CaptureActivity extends Activity implements SurfaceHolder.Callback, Handler.Callback {
 
     private static final String TAG = CaptureActivity.class.getSimpleName();
 
@@ -116,6 +114,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     private InactivityTimer inactivityTimer;
     private BeepManager beepManager;
 //    private AmbientLightManager ambientLightManager;
+
+    private Handler mNetHandler = new Handler(this);
 
     ViewfinderView getViewfinderView() {
         return viewfinderView;
@@ -588,15 +588,16 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                     HttpResponse response = client.execute(get);
                     String json = EntityUtils.toString(response.getEntity(), "UTF-8");
                     JSONObject jsonObject = new JSONObject(json);
-                    final String name = jsonObject.getString("name");
-                    Log.e("wzz name", "name = " + name);
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            contentsTextView.setText(name);
-                        }
-                    });
+                    NetScanResult result = new NetScanResult();
+                    result.name = jsonObject.getString("name");
+                    result.url = jsonObject.getString("img");
+                    Message message = new Message();
+                    message.obj = result;
+                    message.what = 1;
+                    mNetHandler.sendMessage(message);
+
                 } catch (Exception e) {
+                    mNetHandler.sendEmptyMessage(-1);
                     e.printStackTrace();
                 }
             }
@@ -780,5 +781,23 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     public void drawViewfinder() {
         viewfinderView.drawViewfinder();
+    }
+
+    public static final int SCAN_SUCCESS_RESULT_CODE = 200;
+
+    @Override
+    public boolean handleMessage(Message msg) {
+        switch (msg.what) {
+            case -1:
+                Toast.makeText(this, "网络错误，请重试..", Toast.LENGTH_SHORT).show();
+                restartPreviewAfterDelay(0);
+                break;
+            case 1:
+                Intent intent = new Intent();
+                intent.putExtra("result", (NetScanResult) msg.obj);
+                setResult(SCAN_SUCCESS_RESULT_CODE, intent);
+                finish();
+        }
+        return false;
     }
 }

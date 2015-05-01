@@ -133,6 +133,11 @@ public class BaseListChooseDialog extends AlertDialog {
             return this;
         }
 
+        public CBuilder setContents(int resId) {
+            P.mListContents = P.mContext.getResources().getStringArray(resId);
+            return this;
+        }
+
         public CBuilder setContents(int[] contents) {
             String[] strings = new String[contents.length];
             for (int i = 0; i < contents.length; i++) {

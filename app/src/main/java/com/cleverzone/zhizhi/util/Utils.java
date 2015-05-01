@@ -2,6 +2,8 @@ package com.cleverzone.zhizhi.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Environment;
 import android.view.View;
 import android.widget.AbsListView;
@@ -37,6 +39,26 @@ public class Utils {
             e.printStackTrace();
         }
         return calendar;
+    }
+
+    public static boolean isNetConnect(Context context) {
+        try {
+            ConnectivityManager connManager = (ConnectivityManager) (context)
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = connManager.getActiveNetworkInfo();
+            if ((netInfo == null || !netInfo.isConnected())) {
+            } else if (netInfo.getTypeName().toUpperCase().equals("MOBILE")
+                    && netInfo.getExtraInfo() != null
+                    && netInfo.getExtraInfo().equals("cmwap")) {
+                return true;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(context, R.string.no_net_hint, Toast.LENGTH_SHORT).show();
+        return false;
     }
 
     public static int getDayDifference(String stringDate) {

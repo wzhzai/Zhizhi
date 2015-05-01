@@ -7,10 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -20,11 +19,14 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.cleverzone.zhizhi.bean.NetScanResult;
 import com.cleverzone.zhizhi.bean.ProductBean;
 import com.cleverzone.zhizhi.capture.CaptureActivity;
+import com.cleverzone.zhizhi.comui.BaseListChooseDialog;
 import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Const;
 import com.cleverzone.zhizhi.util.SoftInputController;
+import com.cleverzone.zhizhi.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -183,8 +185,21 @@ public class AddProductActivity extends BaseActivity {
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, CaptureActivity.class);
-                mContext.startActivity(intent);
+                new BaseListChooseDialog.CBuilder(mContext).setTitle(R.string.add_product_choose_image_text).setContents(R.array.image_choose_text)
+                        .setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                switch (position) {
+                                    case 2:
+                                        if (!Utils.isNetConnect(mContext)) {
+                                            return;
+                                        }
+                                        Intent intent = new Intent(mContext, CaptureActivity.class);
+                                        AddProductActivity.this.startActivityForResult(intent, 0);
+                                        break;
+                                }
+                            }
+                        }).show();
             }
         });
         mViewList.add(mImageView);
@@ -229,6 +244,15 @@ public class AddProductActivity extends BaseActivity {
         mViewList.add(mExSpinner);
         mExSpinner.setAdapter(new ArrayAdapter<>(mContext, R.layout.spinner_item_add_product, exs));
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == CaptureActivity.SCAN_SUCCESS_RESULT_CODE) {
+            NetScanResult result = (NetScanResult) data.getSerializableExtra("result");
+            mEtName.setText(result.name);
+        }
     }
 
     private void createDatePickDialog() {
