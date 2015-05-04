@@ -3,8 +3,10 @@ package com.cleverzone.zhizhi.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,22 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cleverzone.zhizhi.LoginActivity;
 import com.cleverzone.zhizhi.R;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +42,7 @@ public class MeFragment extends BaseFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "MeFragment";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -32,7 +50,7 @@ public class MeFragment extends BaseFragment {
     private Context mContext;
     private String[] mGroupStrings;
     private int[] mGroupImageResIds = {R.mipmap.icon_me_record, R.mipmap.icon_me_favorite, R.mipmap.icon_me_gold, R.mipmap.icon_me_setting};
-
+    private View mHeader;
 
     /**
      * Use this factory method to create a new instance of
@@ -75,9 +93,21 @@ public class MeFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initAllViews(view);
+    }
+
+    private void initAllViews(View view) {
         mGroupStrings = mContext.getResources().getStringArray(R.array.me_group_text);
         ExpandableListView expandableListView = (ExpandableListView) view.findViewById(R.id.me_exp_list);
         expandableListView.setAdapter(new MeAdapter());
+        mHeader = view.findViewById(R.id.me_header);
+        mHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                startActivityForResult(intent, 0);
+            }
+        });
     }
 
     private class MeAdapter extends BaseExpandableListAdapter {

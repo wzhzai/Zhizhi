@@ -47,4 +47,12 @@
 
     <dimen name="standard_padding">8dip</dimen>
     <dimen name="half_padding">4dip</dimen>
+    <dimen name="login_main_padding_left_right">15dp</dimen>
+    <dimen name="login_et_margin_left">10dp</dimen>
+    <dimen name="login_et_padding_left_right">10dp</dimen>
+    <dimen name="login_button_margin_left_right">10dp</dimen>
+    <dimen name="login_button_padding_top_bottom">5dp</dimen>
+    <dimen name="login_button_text_size">16sp</dimen>
+    <dimen name="login_user_et_text_size">16sp</dimen>
+    <dimen name="login_user_tv_text_size">17sp</dimen>
 </resources>

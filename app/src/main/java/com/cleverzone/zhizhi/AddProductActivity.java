@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -19,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.cleverzone.zhizhi.application.ZApp;
 import com.cleverzone.zhizhi.bean.NetScanResult;
 import com.cleverzone.zhizhi.bean.ProductBean;
 import com.cleverzone.zhizhi.capture.CaptureActivity;
@@ -57,7 +59,7 @@ public class AddProductActivity extends BaseActivity {
     private Button mBtDel;
     private ArrayList<View> mViewList;
     private ImageView mImageView;
-    private ImageLoader mImageLoader;
+    private String mImagePath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +67,6 @@ public class AddProductActivity extends BaseActivity {
         mMainClassifyResId = Const.RECORD_CLASSIFIES_TEXT[getIntent().getIntExtra("which", 0)];
         setContentView(R.layout.activity_add_product);
         mContext = this;
-        mImageLoader = ImageLoader.getInstance();
-        mImageLoader.init(ImageLoaderConfiguration.createDefault(mContext));
         setTitle(R.mipmap.title_bar_icon_record);
         mChooseCalendar = Calendar.getInstance();
         mViewList = new ArrayList<>();
@@ -111,6 +111,7 @@ public class AddProductActivity extends BaseActivity {
             public void onClick(View v) {
                 ProductBean productBean = new ProductBean();
                 productBean.id = mId;
+                productBean.picPath = mImagePath;
                 productBean.name = mEtName.getText().toString();
                 productBean.prDate = mEtPrDate.getText().toString();
                 if (mRgShelfLife.getCheckedRadioButtonId() == R.id.add_product_radio_day) {
@@ -139,8 +140,8 @@ public class AddProductActivity extends BaseActivity {
         for (View view : mViewList) {
             view.setEnabled(false);
         }
-//        hideSoftInputDelay();
         mId = bean.id;
+        ImageLoader.getInstance().displayImage(bean.picPath, mImageView, Utils.getDefaultImageLoaderOptions());
         mEtName.setText(bean.name);
         mEtPrDate.setText(bean.prDate);
         if (bean.shelfLifeDay != 0) {
@@ -173,15 +174,6 @@ public class AddProductActivity extends BaseActivity {
             }
         });
 
-    }
-
-    private void hideSoftInputDelay() {
-        mEtName.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                SoftInputController.hideSoftInput(mContext, mEtName);
-            }
-        }, 100);
     }
 
     private void initAllViews() {
@@ -257,7 +249,12 @@ public class AddProductActivity extends BaseActivity {
         if (requestCode == 0 && resultCode == CaptureActivity.SCAN_SUCCESS_RESULT_CODE) {
             NetScanResult result = (NetScanResult) data.getSerializableExtra("result");
             mEtName.setText(result.name);
-            mImageLoader.displayImage(result.url, mImageView, Utils.getDeafultImageLoaderOptions());
+            ZApp.getInstance().mImageLoader.displayImage(result.url, mImageView, Utils.getDefaultImageLoaderOptions());
+            if (TextUtils.isEmpty(result.url)) {
+                mImagePath = "";
+            } else {
+                mImagePath = result.url;
+            }
         }
     }
 

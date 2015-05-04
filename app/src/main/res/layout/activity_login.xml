@@ -1,0 +1,96 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.cleverzone.zhizhi.LoginActivity">
+
+    <include layout="@layout/common_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/login_main_padding_left_right"
+            android:paddingRight="@dimen/login_main_padding_left_right"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_user_name_text"
+                    android:textSize="@dimen/login_user_tv_text_size"
+                    />
+
+                <EditText
+                    android:id="@+id/login_et_user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/login_user_name_hint_text"
+                    android:textSize="@dimen/login_user_et_text_size"
+                    android:layout_marginLeft="@dimen/login_et_margin_left"
+                    android:paddingLeft="@dimen/login_et_padding_left_right"
+                    android:paddingRight="@dimen/login_et_padding_left_right"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_password_text"
+                    android:textSize="@dimen/login_user_tv_text_size"
+                    />
+
+                <EditText
+                    android:id="@+id/login_et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/login_password_hint_text"
+                    android:textSize="@dimen/login_user_et_text_size"
+                    android:layout_marginLeft="@dimen/login_et_margin_left"
+                    android:paddingLeft="@dimen/login_et_padding_left_right"
+                    android:paddingRight="@dimen/login_et_padding_left_right"
+                    android:inputType="textPassword"
+                    />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/login_text"
+                android:layout_marginLeft="@dimen/login_button_margin_left_right"
+                android:layout_marginRight="@dimen/login_button_margin_left_right"
+                android:paddingTop="@dimen/login_button_padding_top_bottom"
+                android:paddingBottom="@dimen/login_button_padding_top_bottom"
+                android:textSize="@dimen/login_button_text_size"
+                android:textColor="@android:color/white"
+                android:background="@drawable/record_add_product_shape"
+                android:layout_marginTop="10dp"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

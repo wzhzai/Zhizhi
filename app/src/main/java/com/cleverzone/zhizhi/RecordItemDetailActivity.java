@@ -21,15 +21,16 @@ import com.cleverzone.zhizhi.bean.ProductBean;
 import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Const;
 import com.cleverzone.zhizhi.util.Utils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
 
-public class RecordItemDetail extends BaseActivity {
+public class RecordItemDetailActivity extends BaseActivity {
 
-    private static final String TAG = "RecordItemDetail";
+    private static final String TAG = "RecordItemDetailActivity";
 
     private Context mContext;
     private String mMainClassify;
@@ -156,10 +157,12 @@ public class RecordItemDetail extends BaseActivity {
             TextView tvName = (TextView) convertView.findViewById(R.id.record_detail_child_tv_name);
             TextView tvPr = (TextView) convertView.findViewById(R.id.record_detail_child_tv_pr);
             TextView tvEx = (TextView) convertView.findViewById(R.id.record_detail_child_tv_ex);
+            ImageView ivImage = (ImageView) convertView.findViewById(R.id.record_detail_child_iv);
 
             tvName.setText(bean.name);
             tvPr.setText(mContext.getString(R.string.add_product_pr_hint) + ": " + bean.prDate);
             tvEx.setText(mContext.getString(R.string.add_product_ex_hint) + ": " + bean.exDate);
+            ImageLoader.getInstance().displayImage(bean.picPath, ivImage, Utils.getDefaultImageLoaderOptions());
 
             return convertView;
         }

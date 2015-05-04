@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cleverzone.zhizhi.R;
-import com.cleverzone.zhizhi.RecordItemDetail;
+import com.cleverzone.zhizhi.RecordItemDetailActivity;
 import com.cleverzone.zhizhi.comui.KCalendar;
 import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Const;
@@ -129,7 +129,7 @@ public class RecordFragment extends BaseFragment {
                 if (countIsZero(which)) {
                     Toast.makeText(mContext, "还没有记录哦~~", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(mContext, RecordItemDetail.class);
+                    Intent intent = new Intent(mContext, RecordItemDetailActivity.class);
                     intent.putExtra("which", which);
                     startActivity(intent);
                 }

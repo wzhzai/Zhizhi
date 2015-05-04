@@ -80,7 +80,7 @@ import java.util.Map;
  */
 public final class CaptureActivity extends Activity implements SurfaceHolder.Callback, Handler.Callback {
 
-    private static final String TAG = CaptureActivity.class.getSimpleName();
+    private static final String TAG = "CaptureActivity";
 
     private static final long DEFAULT_INTENT_RESULT_DURATION_MS = 1500L;
     private static final long BULK_MODE_SCAN_DELAY_MS = 1000L;
@@ -583,6 +583,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             @Override
             public void run() {
                 HttpGet get = new HttpGet(baseUrl + displayContents);
+                Log.e(TAG, "full url = " + baseUrl + displayContents);
                 HttpClient client = new DefaultHttpClient();
                 try {
                     HttpResponse response = client.execute(get);
