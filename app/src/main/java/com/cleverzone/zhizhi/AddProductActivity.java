@@ -27,6 +27,8 @@ import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Const;
 import com.cleverzone.zhizhi.util.SoftInputController;
 import com.cleverzone.zhizhi.util.Utils;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -55,6 +57,7 @@ public class AddProductActivity extends BaseActivity {
     private Button mBtDel;
     private ArrayList<View> mViewList;
     private ImageView mImageView;
+    private ImageLoader mImageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,8 @@ public class AddProductActivity extends BaseActivity {
         mMainClassifyResId = Const.RECORD_CLASSIFIES_TEXT[getIntent().getIntExtra("which", 0)];
         setContentView(R.layout.activity_add_product);
         mContext = this;
+        mImageLoader = ImageLoader.getInstance();
+        mImageLoader.init(ImageLoaderConfiguration.createDefault(mContext));
         setTitle(R.mipmap.title_bar_icon_record);
         mChooseCalendar = Calendar.getInstance();
         mViewList = new ArrayList<>();
@@ -252,6 +257,7 @@ public class AddProductActivity extends BaseActivity {
         if (requestCode == 0 && resultCode == CaptureActivity.SCAN_SUCCESS_RESULT_CODE) {
             NetScanResult result = (NetScanResult) data.getSerializableExtra("result");
             mEtName.setText(result.name);
+            mImageLoader.displayImage(result.url, mImageView, Utils.getDeafultImageLoaderOptions());
         }
     }
 
