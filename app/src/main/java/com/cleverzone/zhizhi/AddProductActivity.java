@@ -109,6 +109,20 @@ public class AddProductActivity extends BaseActivity {
         setRightButton(R.string.add_product_save_text, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (mEtName.getText().toString().isEmpty()) {
+                    Toast.makeText(mContext, R.string.add_product_name_no_null, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (mEtPrDate.getText().toString().isEmpty()) {
+                    Toast.makeText(mContext, R.string.add_product_pr_no_null, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (mEtShelfLife.getText().toString().isEmpty()) {
+                    Toast.makeText(mContext, R.string.add_product_shelf_life_no_null, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 ProductBean productBean = new ProductBean();
                 productBean.id = mId;
                 productBean.picPath = mImagePath;
@@ -123,10 +137,18 @@ public class AddProductActivity extends BaseActivity {
                 }
                 productBean.exDate = Const.NORMAL_SIMPLE_DATE_FORMAT.format(mChooseCalendar.getTime());
                 productBean.position = mEtPosition.getText().toString();
-                productBean.advance = Integer.parseInt(mEtAdvance.getText().toString());
+                if (mEtAdvance.getText().toString().isEmpty()) {
+                    productBean.advance = 0;
+                } else {
+                    productBean.advance = Integer.parseInt(mEtAdvance.getText().toString());
+                }
                 mChooseCalendar.add(Calendar.DAY_OF_MONTH, productBean.advance);
                 productBean.hintDate = Const.NORMAL_SIMPLE_DATE_FORMAT.format(mChooseCalendar.getTime());
-                productBean.count = Integer.parseInt(mEtQuantity.getText().toString());
+                if (mEtQuantity.getText().toString().isEmpty()) {
+                    productBean.count = 0;
+                } else {
+                    productBean.count = Integer.parseInt(mEtQuantity.getText().toString());
+                }
                 productBean.mainClassify = mContext.getString(mMainClassifyResId);
                 productBean.subClassify = mEtClassify.getText().toString();
                 DBManager.getInstance(mContext).saveProduct(productBean);
@@ -182,6 +204,7 @@ public class AddProductActivity extends BaseActivity {
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SoftInputController.hideSoftInput(mContext, mImageView);
                 new BaseListChooseDialog.CBuilder(mContext).setTitle(R.string.add_product_choose_image_text).setContents(R.array.image_choose_text)
                         .setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override

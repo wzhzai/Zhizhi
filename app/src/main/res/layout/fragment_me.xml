@@ -1,8 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.cleverzone.zhizhi.fragment.MeFragment">
 
     <RelativeLayout android:id="@+id/me_header"
@@ -37,7 +36,7 @@
                 android:id="@+id/me_header_tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="用户名"
+                android:text="@string/me_default_user_name_text"
                 android:textSize="@dimen/record_item_text_size" />
             <TextView
                 android:layout_width="wrap_content"
@@ -58,6 +57,24 @@
 
     </RelativeLayout>
 
+
+    <Button
+        android:id="@+id/me_exit_login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exit_login_text"
+        android:layout_marginLeft="@dimen/login_button_margin_left_right"
+        android:layout_marginRight="@dimen/login_button_margin_left_right"
+        android:paddingTop="@dimen/login_button_padding_top_bottom"
+        android:paddingBottom="@dimen/login_button_padding_top_bottom"
+        android:layout_marginBottom="15dp"
+        android:textSize="@dimen/login_button_text_size"
+        android:textColor="@android:color/white"
+        android:background="@drawable/record_add_product_shape"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentBottom="true"
+        />
+
     <ExpandableListView
         android:id="@+id/me_exp_list"
         android:layout_width="match_parent"
@@ -66,6 +83,8 @@
         android:groupIndicator="@null"
         android:paddingLeft="@dimen/record_each_item_margin_left_right"
         android:paddingRight="@dimen/record_each_item_margin_left_right"
+        android:layout_below="@id/me_header"
+        android:layout_above="@id/me_exit_login_button"
         />
 
-</LinearLayout>
+</RelativeLayout>

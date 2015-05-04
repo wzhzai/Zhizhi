@@ -169,4 +169,9 @@ public class SharedPreferencesUtil {
             e.printStackTrace();
         }
     }
+
+    public static boolean isContainKey(Context context, String columnName) {
+        SharedPreferences sharedPreferences = getAppSharedPreferences(context);
+        return sharedPreferences.contains(columnName);
+    }
 }

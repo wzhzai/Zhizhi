@@ -11,12 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cleverzone.zhizhi.LoginActivity;
 import com.cleverzone.zhizhi.R;
+import com.cleverzone.zhizhi.util.SharedPreferencesUtil;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -51,6 +54,8 @@ public class MeFragment extends BaseFragment {
     private String[] mGroupStrings;
     private int[] mGroupImageResIds = {R.mipmap.icon_me_record, R.mipmap.icon_me_favorite, R.mipmap.icon_me_gold, R.mipmap.icon_me_setting};
     private View mHeader;
+    private TextView mTvName;
+    private Button mBtExit;
 
     /**
      * Use this factory method to create a new instance of
@@ -108,6 +113,32 @@ public class MeFragment extends BaseFragment {
                 startActivityForResult(intent, 0);
             }
         });
+        mTvName = (TextView) view.findViewById(R.id.me_header_tv_name);
+        mBtExit = (Button) view.findViewById(R.id.me_exit_login_button);
+        mBtExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferencesUtil.removeKey(mContext, "user_name");
+                mTvName.setText(R.string.me_default_user_name_text);
+                mBtExit.setVisibility(View.GONE);
+                Toast.makeText(mContext, R.string.logout_success, Toast.LENGTH_SHORT).show();
+            }
+        });
+        if (SharedPreferencesUtil.isContainKey(mContext, "user_name")) {
+            mTvName.setText(SharedPreferencesUtil.getString(mContext, "user_name", ""));
+            mBtExit.setVisibility(View.VISIBLE);
+        } else {
+            mBtExit.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == LoginActivity.LOGIN_SUCCESS) {
+            mTvName.setText(data.getStringExtra("user_name"));
+            mBtExit.setVisibility(View.VISIBLE);
+        }
     }
 
     private class MeAdapter extends BaseExpandableListAdapter {

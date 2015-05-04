@@ -81,12 +81,27 @@
         <item>从相册选择</item>
         <item>条形码扫描</item>
     </string-array>
+
     <string name="title_activity_login">LoginActivity</string>
     <string name="login_user_name_hint_text">邮箱/手机号</string>
     <string name="login_password_hint_text">请输入密码</string>
     <string name="login_user_name_text">用户名</string>
     <string name="login_password_text">密  码</string>
     <string name="login_text">登录</string>
+    <string name="exit_login_text">退出登录</string>
     <string name="login_register">注册</string>
+    <string name="login_success">登录成功</string>
+    <string name="logout_success">登出成功</string>
+    <string name="register_success">注册成功</string>
+    <string name="net_time_out">网络连接超时，请重试</string>
+    <string name="server_error">服务器异常，请重试</string>
+    <string name="user_name_exist">该用户名已存在</string>
+    <string name="user_no_exist">该用户不存在</string>
+    <string name="me_default_user_name_text">用户名</string>
+
+
+    <string name="add_product_name_no_null">名字不能为空</string>
+    <string name="add_product_pr_no_null">生产日期不能为空</string>
+    <string name="add_product_shelf_life_no_null">保质期不能为空</string>
 
 </resources>
