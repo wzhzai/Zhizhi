@@ -103,5 +103,6 @@
     <string name="add_product_name_no_null">名字不能为空</string>
     <string name="add_product_pr_no_null">生产日期不能为空</string>
     <string name="add_product_shelf_life_no_null">保质期不能为空</string>
+    <string name="zhizhi_refresh">刷新</string>
 
 </resources>

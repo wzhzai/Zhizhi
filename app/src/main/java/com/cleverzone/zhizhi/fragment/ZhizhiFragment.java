@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +20,23 @@ import com.cleverzone.zhizhi.R;
 import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Utils;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ZhizhiFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ZhizhiFragment extends BaseFragment {
+public class ZhizhiFragment extends BaseFragment implements Handler.Callback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -41,6 +54,10 @@ public class ZhizhiFragment extends BaseFragment {
             Utils.addProductChooseClassify(mContext);
         }
     };
+    public ArrayList<String> mTipContentList;
+    private static final String TIP_URL = "http://59.67.152.71/wangzhengze/ZhizhiServer/GetNews.php";
+    private Handler mHandler = new Handler(this);
+    private ZhizhiListAdapter mZhizhiListAdapter;
 
 
     /**
@@ -89,9 +106,35 @@ public class ZhizhiFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mTipContentList = new ArrayList<>();
         mListView = (ListView) view.findViewById(R.id.zhizhi_list);
         mListView.addHeaderView(initHeaderView());
-        mListView.setAdapter(new ZhizhiListAdapter());
+        mZhizhiListAdapter = new ZhizhiListAdapter();
+        mListView.setAdapter(mZhizhiListAdapter);
+        startLoadTips();
+    }
+
+
+    public void startLoadTips() {
+        mTipContentList.clear();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpClient client = new DefaultHttpClient();
+                try {
+                    HttpResponse response = client.execute(new HttpGet(TIP_URL));
+                    String data = EntityUtils.toString(response.getEntity());
+                    JSONObject jsonObject = new JSONObject(data);
+                    JSONArray jsonArray = jsonObject.getJSONArray("message");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        mTipContentList.add(jsonArray.getString(i));
+                    }
+                    mHandler.sendEmptyMessage(1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     private View initHeaderView() {
@@ -121,16 +164,26 @@ public class ZhizhiFragment extends BaseFragment {
         setTopHintInfo();
     }
 
+    @Override
+    public boolean handleMessage(Message msg) {
+        switch (msg.what) {
+            case 1:
+                mZhizhiListAdapter.notifyDataSetChanged();
+                break;
+        }
+        return false;
+    }
+
     private class ZhizhiListAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return 10;
+            return mTipContentList.size();
         }
 
         @Override
-        public Object getItem(int position) {
-            return null;
+        public String getItem(int position) {
+            return mTipContentList.get(position);
         }
 
         @Override
@@ -161,6 +214,10 @@ public class ZhizhiFragment extends BaseFragment {
             } else {
                 ivLastBigCycle.setVisibility(View.GONE);
             }
+
+            TextView tvBubble = (TextView) convertView.findViewById(R.id.zhizhi_item_bubble);
+            tvBubble.setText(getItem(position));
+
 
             return convertView;
         }

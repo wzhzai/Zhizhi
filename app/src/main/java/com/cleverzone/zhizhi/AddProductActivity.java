@@ -64,10 +64,26 @@ public class AddProductActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMainClassifyResId = Const.RECORD_CLASSIFIES_TEXT[getIntent().getIntExtra("which", 0)];
+        int which = getIntent().getIntExtra("which", 0);
+        mMainClassifyResId = Const.RECORD_CLASSIFIES_TEXT[which];
         setContentView(R.layout.activity_add_product);
         mContext = this;
-        setTitle(R.mipmap.title_bar_icon_record);
+        int title = 0;
+        switch (which) {
+            case 0:
+                title = R.mipmap.icon_makeup_title;
+                break;
+            case 1:
+                title = R.mipmap.icon_food_title;
+                break;
+            case 2:
+                title = R.mipmap.icon_medicine_title;
+                break;
+            case 3:
+                title = R.mipmap.icon_others_title;
+                break;
+        }
+        setTitle(title);
         mChooseCalendar = Calendar.getInstance();
         mViewList = new ArrayList<>();
         int mode = getIntent().getIntExtra("mode", MODE_ADD);

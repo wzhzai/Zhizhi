@@ -46,8 +46,9 @@
             android:singleLine="true"
             android:gravity="center"
             android:paddingLeft="10dp"
-            android:text="这是测试的小贴士！！！"
-            android:textSize="12sp" />
+            android:textColor="@color/main_tab_text_normal_color"
+            android:text="数据加载中..."
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <ImageView

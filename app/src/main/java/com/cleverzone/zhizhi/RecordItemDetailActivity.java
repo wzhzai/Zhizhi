@@ -47,7 +47,22 @@ public class RecordItemDetailActivity extends BaseActivity {
         mContext = this;
         mWhich = getIntent().getIntExtra("which", 0);
         mMainClassify = mContext.getString(Const.RECORD_CLASSIFIES_TEXT[mWhich]);
-        setTitle(R.mipmap.title_bar_icon_record);
+        int title = 0;
+        switch (mWhich) {
+            case 0:
+                title = R.mipmap.icon_makeup_title;
+                break;
+            case 1:
+                title = R.mipmap.icon_food_title;
+                break;
+            case 2:
+                title = R.mipmap.icon_medicine_title;
+                break;
+            case 3:
+                title = R.mipmap.icon_others_title;
+                break;
+        }
+        setTitle(title);
         setLeftButtonHide();
         setRightButtonHide();
         mAllProductInfoMap = new LinkedHashMap<>();

@@ -4,11 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +25,6 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
@@ -52,6 +48,7 @@ public class LoginActivity extends BaseActivity implements Handler.Callback {
         setContentView(R.layout.activity_login);
         setLeftButtonHide();
         setRightButton(R.string.login_register, onRegisterClickListener);
+        setTitle(R.mipmap.icon_login);
         initAllViews();
     }
 
@@ -61,6 +58,7 @@ public class LoginActivity extends BaseActivity implements Handler.Callback {
             setRightButton(R.string.login_text, onLoginClickListener);
             mBtLogin.setText(R.string.login_register);
             mMode = "1";
+            setTitle(R.mipmap.icon_register);
         }
     };
 
@@ -70,6 +68,7 @@ public class LoginActivity extends BaseActivity implements Handler.Callback {
             setRightButton(R.string.login_register, onRegisterClickListener);
             mBtLogin.setText(R.string.login_text);
             mMode = "2";
+            setTitle(R.mipmap.icon_login);
         }
     };
 
