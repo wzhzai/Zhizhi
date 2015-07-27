@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cleverzone.zhizhi.R;
+import com.cleverzone.zhizhi.comui.LoadingDialog;
 import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Utils;
 
@@ -58,6 +60,7 @@ public class ZhizhiFragment extends BaseFragment implements Handler.Callback {
     private static final String TIP_URL = "http://59.67.152.71/wangzhengze/ZhizhiServer/GetNews.php";
     private Handler mHandler = new Handler(this);
     private ZhizhiListAdapter mZhizhiListAdapter;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
 
     /**
@@ -111,12 +114,18 @@ public class ZhizhiFragment extends BaseFragment implements Handler.Callback {
         mListView.addHeaderView(initHeaderView());
         mZhizhiListAdapter = new ZhizhiListAdapter();
         mListView.setAdapter(mZhizhiListAdapter);
-        startLoadTips();
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.zhizhi_swipe_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                setTopHintInfo();
+                startLoadTips();
+            }
+        });
     }
 
 
     public void startLoadTips() {
-        mTipContentList.clear();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -126,6 +135,7 @@ public class ZhizhiFragment extends BaseFragment implements Handler.Callback {
                     String data = EntityUtils.toString(response.getEntity());
                     JSONObject jsonObject = new JSONObject(data);
                     JSONArray jsonArray = jsonObject.getJSONArray("message");
+                    mTipContentList.clear();
                     for (int i = 0; i < jsonArray.length(); i++) {
                         mTipContentList.add(jsonArray.getString(i));
                     }
@@ -162,16 +172,27 @@ public class ZhizhiFragment extends BaseFragment implements Handler.Callback {
     public void onResume() {
         super.onResume();
         setTopHintInfo();
+        startLoadTips();
     }
 
     @Override
     public boolean handleMessage(Message msg) {
         switch (msg.what) {
             case 1:
-                mZhizhiListAdapter.notifyDataSetChanged();
+                updateMessageList();
                 break;
         }
         return false;
+    }
+
+    private void updateMessageList() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mZhizhiListAdapter.notifyDataSetChanged();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     private class ZhizhiListAdapter extends BaseAdapter {

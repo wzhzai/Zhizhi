@@ -97,12 +97,7 @@ public class MainActivity extends BaseActivity {
                 case 0:
                     mIvTitle.setImageResource(R.mipmap.title_bar_icon_zhizhi);
                     setLeftButtonHide();
-                    setRightButton(R.string.zhizhi_refresh, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ((ZhizhiFragment)mFragmentMap.get(position)).startLoadTips();
-                        }
-                    });
+                    setRightButtonHide();
                     break;
                 case 1:
                     mIvTitle.setImageResource(R.mipmap.title_bar_icon_record);
@@ -131,12 +126,7 @@ public class MainActivity extends BaseActivity {
         final TabStateBean tabStateBean = initTab();
         setTabSelected(0, tabStateBean);
         setLeftButtonHide();
-        setRightButton(R.string.zhizhi_refresh, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((ZhizhiFragment) mFragmentMap.get(0)).startLoadTips();
-            }
-        });
+        setRightButtonHide();
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             private int mNormalColor = getResources().getColor(R.color.main_tab_text_normal_color);

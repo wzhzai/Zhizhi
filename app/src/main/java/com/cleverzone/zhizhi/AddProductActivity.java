@@ -32,6 +32,7 @@ import com.cleverzone.zhizhi.util.Utils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -177,6 +178,11 @@ public class AddProductActivity extends BaseActivity {
     private void showInfo(ProductBean bean) {
         for (View view : mViewList) {
             view.setEnabled(false);
+        }
+        try {
+            mChooseCalendar.setTime(Const.NORMAL_SIMPLE_DATE_FORMAT.parse(bean.prDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         mId = bean.id;
         ImageLoader.getInstance().displayImage(bean.picPath, mImageView, Utils.getDefaultImageLoaderOptions());
