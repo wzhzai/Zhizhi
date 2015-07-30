@@ -73,7 +73,8 @@ public class RecordItemDetailActivity extends BaseActivity {
 
     private void initData() {
         mAllProductInfoMap.clear();
-        mAllProductInfoMap.putAll(DBManager.getInstance(mContext).getAllProductInfoByMainClassify(mMainClassify));
+        // TODO: 2015/7/30 putAll
+//        mAllProductInfoMap.putAll(DBManager.getInstance(mContext).getAllProductInfoByMainClassify(mMainClassify));
         mGroupList.clear();
         mGroupList.addAll(mAllProductInfoMap.keySet());
     }
@@ -154,7 +155,9 @@ public class RecordItemDetailActivity extends BaseActivity {
             tvGroupName.setText(getGroup(groupPosition));
 
             TextView tvRecentHint = (TextView) convertView.findViewById(R.id.record_detail_group_recent_hint);
-            String hintDate = DBManager.getInstance(mContext).getRecentHintDateByMainAndSubClassify(mMainClassify, getGroup(groupPosition));
+            // TODO: 2015/7/30 recent hint
+            //String hintDate = DBManager.getInstance(mContext).getRecentHintDateByMainAndSubClassify(mMainClassify, getGroup(groupPosition));
+            String hintDate = "2015-01-01";
             int differentDay = Utils.getDayDifference(hintDate);
             tvRecentHint.setText(Html.fromHtml(mContext.getString(R.string.record_recent_hint_text, differentDay)));
 

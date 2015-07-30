@@ -2,6 +2,7 @@ package com.cleverzone.zhizhi.application;
 
 import android.app.Application;
 
+import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -19,6 +20,7 @@ public class ZApp extends Application {
         setInstance(this);
         mImageLoader = ImageLoader.getInstance();
         mImageLoader.init(ImageLoaderConfiguration.createDefault(getBaseContext()));
+        DBManager.getInstance(this);
     }
 
     public static void setInstance(ZApp instance) {

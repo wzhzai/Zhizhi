@@ -139,7 +139,9 @@ public class RecordFragment extends BaseFragment {
     }
 
     private boolean countIsZero(int which) {
-        return DBManager.getInstance(mContext).getProductInfoCount(mContext.getString(Const.RECORD_CLASSIFIES_TEXT[which])) == 0;
+        // TODO: 2015/7/30 getCount
+//        return DBManager.getInstance(mContext).getProductInfoCount(mContext.getString(Const.RECORD_CLASSIFIES_TEXT[which])) == 0;
+        return true;
     }
 
 
@@ -227,12 +229,14 @@ public class RecordFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         Log.e(TAG, "onResume");
-        mMarkList = DBManager.getInstance(mContext).getAllRecentHintDate();
-        mKCalendar.addMarks(mMarkList, 0);
+        // TODO: 2015/7/30 mark
+//        mMarkList = DBManager.getInstance(mContext).getAllRecentHintDate();
+//        mKCalendar.addMarks(mMarkList, 0);
         int index = 0;
         for (int i : Const.RECORD_CLASSIFIES_TEXT) {
             String mainClassify = mContext.getString(i);
-            String hintDate = DBManager.getInstance(mContext).getRecentHintDateByMainClassify(mainClassify);
+//            String hintDate = DBManager.getInstance(mContext).getRecentHintDateByMainClassify(mainClassify);
+            String hintDate = "";
             if (TextUtils.isEmpty(hintDate)) {
                 mHintTextViewList.get(index).setText(mContext.getString(R.string.record_recent_hint_no_day_text));
             } else {

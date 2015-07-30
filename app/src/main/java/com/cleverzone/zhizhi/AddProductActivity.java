@@ -43,7 +43,6 @@ public class AddProductActivity extends BaseActivity {
     public static final int MODE_SHOW = 1;
 
     private Context mContext;
-    private EditText mEtPrDate;
     private EditText mEtShelfLife;
     private RadioGroup mRgShelfLife;
     private EditText mEtName;
@@ -54,8 +53,6 @@ public class AddProductActivity extends BaseActivity {
     private EditText mEtFrequency;
     private Calendar mChooseCalendar;
     private int mMainClassifyResId;
-    private Spinner mPrSpinner;
-    private Spinner mExSpinner;
     private int mId = -1;
     private Button mBtDel;
     private ArrayList<View> mViewList;
@@ -131,10 +128,6 @@ public class AddProductActivity extends BaseActivity {
                     Toast.makeText(mContext, R.string.add_product_name_no_null, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (mEtPrDate.getText().toString().isEmpty()) {
-                    Toast.makeText(mContext, R.string.add_product_pr_no_null, Toast.LENGTH_SHORT).show();
-                    return;
-                }
                 if (mEtShelfLife.getText().toString().isEmpty()) {
                     Toast.makeText(mContext, R.string.add_product_shelf_life_no_null, Toast.LENGTH_SHORT).show();
                     return;
@@ -144,7 +137,6 @@ public class AddProductActivity extends BaseActivity {
                 productBean.id = mId;
                 productBean.picPath = mImagePath;
                 productBean.name = mEtName.getText().toString();
-                productBean.prDate = mEtPrDate.getText().toString();
                 if (mRgShelfLife.getCheckedRadioButtonId() == R.id.add_product_radio_day) {
                     productBean.shelfLifeDay = Integer.parseInt(mEtShelfLife.getText().toString());
                     mChooseCalendar.add(Calendar.DAY_OF_MONTH, productBean.shelfLifeDay);
@@ -168,7 +160,8 @@ public class AddProductActivity extends BaseActivity {
                 }
                 productBean.mainClassify = mContext.getString(mMainClassifyResId);
                 productBean.subClassify = mEtClassify.getText().toString();
-                DBManager.getInstance(mContext).saveProduct(productBean);
+                // TODO: 2015/7/30  saveProduct
+//                DBManager.getInstance(mContext).saveProduct(productBean);
                 Toast.makeText(mContext, getString(R.string.product_add_success), Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -187,7 +180,6 @@ public class AddProductActivity extends BaseActivity {
         mId = bean.id;
         ImageLoader.getInstance().displayImage(bean.picPath, mImageView, Utils.getDefaultImageLoaderOptions());
         mEtName.setText(bean.name);
-        mEtPrDate.setText(bean.prDate);
         if (bean.shelfLifeDay != 0) {
             mRgShelfLife.check(R.id.add_product_radio_day);
             mEtShelfLife.setText(String.valueOf(bean.shelfLifeDay));
@@ -206,7 +198,8 @@ public class AddProductActivity extends BaseActivity {
                         .setMessage("确认要删除吗？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        DBManager.getInstance(mContext).deldetProduct(mId);
+                        // TODO: 2015/7/30 deleteProduct
+//                        DBManager.getInstance(mContext).deldetProduct(mId);
                         finish();
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -245,19 +238,8 @@ public class AddProductActivity extends BaseActivity {
             }
         });
         mViewList.add(mImageView);
-        mEtPrDate = (EditText) findViewById(R.id.add_product_et_pr);
-        mViewList.add(mEtPrDate);
-        mEtPrDate.setInputType(InputType.TYPE_NULL);
         mEtShelfLife = (EditText) findViewById(R.id.add_product_et_shelf_lift);
         mViewList.add(mEtShelfLife);
-        mEtPrDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    createDatePickDialog();
-                }
-            }
-        });
         mRgShelfLife = (RadioGroup) findViewById(R.id.add_product_rg_shelf_lift);
         mViewList.add(mRgShelfLife);
         mViewList.add(findViewById(R.id.add_product_radio_day));
@@ -275,16 +257,6 @@ public class AddProductActivity extends BaseActivity {
         mViewList.add(mEtFrequency);
         mEtClassify = (EditText) findViewById(R.id.add_product_et_classify);
         mViewList.add(mEtClassify);
-
-        String[] prs = getResources().getStringArray(R.array.add_product_pr_spinner);
-        mPrSpinner = (Spinner) findViewById(R.id.add_product_pr_spinner);
-        mViewList.add(mPrSpinner);
-        mPrSpinner.setAdapter(new ArrayAdapter<>(mContext, R.layout.spinner_item_add_product, prs));
-
-        String[] exs = getResources().getStringArray(R.array.add_product_ex_spinner);
-        mExSpinner = (Spinner) findViewById(R.id.add_product_ex_spinner);
-        mViewList.add(mExSpinner);
-        mExSpinner.setAdapter(new ArrayAdapter<>(mContext, R.layout.spinner_item_add_product, exs));
 
     }
 
@@ -312,14 +284,12 @@ public class AddProductActivity extends BaseActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 mChooseCalendar.set(year, monthOfYear, dayOfMonth);
-                mEtPrDate.setText(Const.NORMAL_SIMPLE_DATE_FORMAT.format(mChooseCalendar.getTime()));
                 mEtShelfLife.requestFocus();
             }
         }, year, month, day);
         datePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                mEtPrDate.clearFocus();
                 mEtShelfLife.requestFocus();
             }
         });

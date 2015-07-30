@@ -55,4 +55,8 @@
     <dimen name="login_button_text_size">16sp</dimen>
     <dimen name="login_user_et_text_size">16sp</dimen>
     <dimen name="login_user_tv_text_size">17sp</dimen>
+    <dimen name="add_product_tv_text_size">14sp</dimen>
+    <dimen name="add_product_et_text_size">12sp</dimen>
+    <dimen name="add_product_view_height">23dp</dimen>
+    <dimen name="add_product_margin_top">15dp</dimen>
 </resources>

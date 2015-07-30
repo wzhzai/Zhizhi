@@ -155,7 +155,8 @@ public class ZhizhiFragment extends BaseFragment implements Handler.Callback {
     private void setTopHintInfo() {
         TextView tvDay = (TextView) mHeaderView.findViewById(R.id.zhizhi_top_day_hint_tv_number);
         TextView tvHint = (TextView) mHeaderView.findViewById(R.id.zhizhi_top_day_hint_tv_normal);
-        String hintDate = DBManager.getInstance(mContext).getRecentHintDate();
+//        String hintDate = DBManager.getInstance(mContext).getRecentHintDate();
+        String hintDate = "";
         if (TextUtils.isEmpty(hintDate)) {
             tvHint.setText(R.string.zhizhi_top_day_hint_no_product);
             tvDay.setVisibility(View.GONE);
