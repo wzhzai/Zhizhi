@@ -98,50 +98,6 @@
                         android:paddingLeft="@dimen/add_product_et_padding_left_right"
                         android:paddingRight="@dimen/add_product_et_padding_left_right"
                         android:singleLine="true"
-                        android:text="2000-01-01"
-                        android:textColor="@color/add_product_text_color"
-                        android:textSize="@dimen/add_product_et_text_size" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/add_product_margin_top"
-                    >
-
-                    <TextView
-                        android:id="@+id/add_product_ex_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:text="@string/add_product_ex_hint"
-                        android:textColor="@color/add_product_text_color"
-                        android:textSize="@dimen/add_product_tv_text_size" />
-
-                    <ImageView
-                        android:id="@+id/add_product_ex_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:visibility="invisible"
-                        android:src="@mipmap/add_product_calendar" />
-
-                    <TextView
-                        android:id="@+id/add_product_et_ex"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/add_product_view_height"
-                        android:layout_marginLeft="@dimen/add_product_et_padding_left_right"
-                        android:layout_marginRight="@dimen/add_product_et_padding_left_right"
-                        android:layout_toLeftOf="@id/add_product_ex_iv"
-                        android:layout_toRightOf="@id/add_product_ex_tv"
-                        android:background="@drawable/add_product_edit_text_shape"
-                        android:gravity="center"
-                        android:paddingLeft="@dimen/add_product_et_padding_left_right"
-                        android:paddingRight="@dimen/add_product_et_padding_left_right"
-                        android:singleLine="true"
-                        android:text="2000-01-01"
                         android:textColor="@color/add_product_text_color"
                         android:textSize="@dimen/add_product_et_text_size" />
                 </RelativeLayout>
@@ -178,6 +134,7 @@
                             android:layout_weight="1"
                             android:button="@drawable/radio_button_selector"
                             android:text="@string/day"
+                            android:checked="true"
                             android:textColor="@color/add_product_text_color"
                             android:textSize="@dimen/add_product_tv_text_size" />
 
@@ -219,11 +176,53 @@
                         android:paddingLeft="@dimen/add_product_et_padding_left_right"
                         android:paddingRight="@dimen/add_product_et_padding_left_right"
                         android:singleLine="true"
-                        android:text="10"
                         android:textColor="@color/add_product_text_color"
                         android:textSize="@dimen/add_product_et_text_size" />
 
                 </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/add_product_margin_top"
+                    >
+
+                    <TextView
+                        android:id="@+id/add_product_ex_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/add_product_ex_hint"
+                        android:textColor="@color/add_product_text_color"
+                        android:textSize="@dimen/add_product_tv_text_size" />
+
+                    <ImageView
+                        android:id="@+id/add_product_ex_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:visibility="invisible"
+                        android:src="@mipmap/add_product_calendar" />
+
+                    <TextView
+                        android:id="@+id/add_product_et_ex"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/add_product_view_height"
+                        android:layout_marginLeft="@dimen/add_product_et_padding_left_right"
+                        android:layout_marginRight="@dimen/add_product_et_padding_left_right"
+                        android:layout_toLeftOf="@id/add_product_ex_iv"
+                        android:layout_toRightOf="@id/add_product_ex_tv"
+                        android:background="@drawable/add_product_edit_text_shape"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/add_product_et_padding_left_right"
+                        android:paddingRight="@dimen/add_product_et_padding_left_right"
+                        android:singleLine="true"
+                        android:textColor="@color/add_product_text_color"
+                        android:textSize="@dimen/add_product_et_text_size" />
+                </RelativeLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"

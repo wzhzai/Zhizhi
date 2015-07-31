@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.cleverzone.zhizhi.bean.NewProductBean;
 import com.cleverzone.zhizhi.bean.ProductBean;
 
 import java.util.ArrayList;
@@ -60,6 +61,29 @@ public class DBManager {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        }
+    }
+
+    public void saveProduct(NewProductBean bean) {
+        ContentValues values = new ContentValues();
+        values.put("name", bean.name);
+        values.put("pic_path", bean.picPath);
+        values.put("pr_date", bean.prDate);
+        values.put("shelf_life", bean.shelfLife);
+        values.put("shelf_type", bean.shelfLifeType);
+        values.put("ex_date", bean.exDate);
+        values.put("count", bean.count);
+        values.put("position", bean.position);
+        values.put("advance", bean.advance);
+        values.put("main_classify", bean.mainClassify);
+        values.put("sub_classify", bean.subClassify);
+        values.put("backup", bean.backup);
+        values.put("frequency", bean.frequency);
+        values.put("hint_date", bean.hintDate);
+        if (bean.id == -1) {
+            db.insert("record", null, values);
+        } else {
+            db.update("record", values, "_id = ?", new String[]{String.valueOf(bean.id)});
         }
     }
 

@@ -48,6 +48,7 @@
     <string name="msg_default_mms_subject">Hi</string>
     <string name="msg_intent_failed">抱歉，无法打开所需软件。 条码内容可能无效。</string>
     <string name="button_ok">确定</string>
+    <string name="button_cancel">取消</string>
     <string name="button_product_search">打开产品搜索</string>
     <string name="button_web_search">网页搜索</string>
     <string name="button_custom_product_search">自定义搜索</string>
