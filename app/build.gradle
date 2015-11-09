@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.cleverzone.zhizhi"
@@ -21,8 +21,8 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.google.zxing:android-core:3.2.0'
-    compile 'com.android.support:appcompat-v7:22.0.0'
-    compile 'com.google.zxing:core:3.2.0'
+    compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
+    compile 'com.google.zxing:core:3.2.1'
+    compile 'com.google.zxing:android-core:3.2.1'
 }
