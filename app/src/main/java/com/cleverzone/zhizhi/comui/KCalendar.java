@@ -463,9 +463,9 @@ public class KCalendar extends ViewFlipper {
      * @param date 日期
      * @param id   bitmap res id
      */
-    public void addMarks(Date[] date, int id) {
-        for (int i = 0; i < date.length; i++) {
-            marksMap.put(format(date[i]), id);
+    public void addMarks(List<Date> date, int id, boolean b) {
+        for (int i = 0; i < date.size(); i++) {
+            marksMap.put(format(date.get(i)), id);
         }
         setCalendarDate();
     }

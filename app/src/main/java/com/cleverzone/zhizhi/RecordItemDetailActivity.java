@@ -17,14 +17,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cleverzone.zhizhi.bean.NewProductBean;
 import com.cleverzone.zhizhi.bean.ProductBean;
 import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Const;
+import com.cleverzone.zhizhi.util.DateUtil;
 import com.cleverzone.zhizhi.util.Utils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Set;
 
 
@@ -35,7 +38,7 @@ public class RecordItemDetailActivity extends BaseActivity {
     private Context mContext;
     private String mMainClassify;
     private ExpandableListView mExpandableListView;
-    private LinkedHashMap<String, ArrayList<ProductBean>> mAllProductInfoMap;
+    private LinkedHashMap<String, List<NewProductBean>> mAllProductInfoMap;
     private ArrayList<String> mGroupList;
     private int mWhich;
     private DetailAdapter mDetailAdapter;
@@ -74,7 +77,7 @@ public class RecordItemDetailActivity extends BaseActivity {
     private void initData() {
         mAllProductInfoMap.clear();
         // TODO: 2015/7/30 putAll
-//        mAllProductInfoMap.putAll(DBManager.getInstance(mContext).getAllProductInfoByMainClassify(mMainClassify));
+        mAllProductInfoMap.putAll(DBManager.getInstance(mContext).getAllProductInfoByMainClassify(mMainClassify));
         mGroupList.clear();
         mGroupList.addAll(mAllProductInfoMap.keySet());
     }
@@ -126,7 +129,7 @@ public class RecordItemDetailActivity extends BaseActivity {
         }
 
         @Override
-        public ProductBean getChild(int groupPosition, int childPosition) {
+        public NewProductBean getChild(int groupPosition, int childPosition) {
             return mAllProductInfoMap.get(mGroupList.get(groupPosition)).get(childPosition);
         }
 
@@ -155,10 +158,8 @@ public class RecordItemDetailActivity extends BaseActivity {
             tvGroupName.setText(getGroup(groupPosition));
 
             TextView tvRecentHint = (TextView) convertView.findViewById(R.id.record_detail_group_recent_hint);
-            // TODO: 2015/7/30 recent hint
-            //String hintDate = DBManager.getInstance(mContext).getRecentHintDateByMainAndSubClassify(mMainClassify, getGroup(groupPosition));
-            String hintDate = "2015-01-01";
-            int differentDay = Utils.getDayDifference(hintDate);
+            int hintDate = DBManager.getInstance(mContext).getRecentHintDateByMainAndSubClassify(mMainClassify, getGroup(groupPosition));
+            int differentDay = Utils.getDayDifference(DateUtil.getDateString(hintDate));
             tvRecentHint.setText(Html.fromHtml(mContext.getString(R.string.record_recent_hint_text, differentDay)));
 
             return convertView;
@@ -166,7 +167,7 @@ public class RecordItemDetailActivity extends BaseActivity {
 
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-            ProductBean bean = getChild(groupPosition, childPosition);
+            NewProductBean bean = getChild(groupPosition, childPosition);
 
             if (convertView == null) {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_record_detail_child, parent, false);
@@ -178,8 +179,8 @@ public class RecordItemDetailActivity extends BaseActivity {
             ImageView ivImage = (ImageView) convertView.findViewById(R.id.record_detail_child_iv);
 
             tvName.setText(bean.name);
-            tvPr.setText(mContext.getString(R.string.add_product_pr_hint) + ": " + bean.prDate);
-            tvEx.setText(mContext.getString(R.string.add_product_ex_hint) + ": " + bean.exDate);
+            tvPr.setText(mContext.getString(R.string.add_product_pr_hint) + ": " + DateUtil.getDateString(bean.prDate));
+            tvEx.setText(mContext.getString(R.string.add_product_ex_hint) + ": " + DateUtil.getDateString(bean.exDate));
             ImageLoader.getInstance().displayImage(bean.picPath, ivImage, Utils.getDefaultImageLoaderOptions());
 
             return convertView;

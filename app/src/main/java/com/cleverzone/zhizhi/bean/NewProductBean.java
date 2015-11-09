@@ -1,9 +1,11 @@
 package com.cleverzone.zhizhi.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by WANGZHENGZE on 2015/7/30.
  */
-public class NewProductBean {
+public class NewProductBean implements Serializable {
     /**
      * id
      */

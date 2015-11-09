@@ -15,12 +15,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cleverzone.zhizhi.application.ZApp;
 import com.cleverzone.zhizhi.bean.NetScanResult;
 import com.cleverzone.zhizhi.bean.NewProductBean;
 import com.cleverzone.zhizhi.capture.CaptureActivity;
 import com.cleverzone.zhizhi.comui.BaseListChooseDialog;
+import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Const;
 import com.cleverzone.zhizhi.util.DateUtil;
 import com.cleverzone.zhizhi.util.SoftInputController;
@@ -35,17 +37,29 @@ import java.util.HashMap;
 public class AddProductActivity extends BaseActivity {
 
     public static final int MODE_ADD = 0;
+
     public static final int MODE_SHOW = 1;
 
     private Context mContext;
+
     private int mMainClassifyResId;
+
     private ArrayList<View> mViewList;
+
     private String mImagePath = "";
+
     private ViewEnableController mViewEnableController;
+
     private HashMap<Integer, View> mViewHashMap;
+
     private int mPrTimestamp = 0;
+
     private int mExTimestamp = 0;
+
     private int mLifeType = Const.SHELF_LIFE_TYPE_DAY;
+
+    private DBManager mDBManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +70,7 @@ public class AddProductActivity extends BaseActivity {
         mMainClassifyResId = Const.RECORD_CLASSIFIES_TEXT[which];
         setContentView(R.layout.activity_add_product);
         mContext = this;
+        mDBManager = DBManager.getInstance(mContext);
         int title = 0;
         switch (which) {
             case 0:
@@ -120,6 +135,24 @@ public class AddProductActivity extends BaseActivity {
         NewProductBean productBean = new NewProductBean();
         productBean.name = ((EditText) mViewHashMap.get(R.id.add_product_et_name)).getText().toString();
         productBean.picPath = mImagePath;
+        productBean.prDate = mPrTimestamp;
+        productBean.shelfLife = Integer.parseInt(((EditText) mViewHashMap.get(R.id.add_product_et_shelf_lift)).getText().toString());
+        productBean.shelfLifeType = mLifeType;
+        productBean.exDate = mExTimestamp;
+        String count = ((EditText) mViewHashMap.get(R.id.add_product_et_quantity)).getText().toString();
+        productBean.count = TextUtils.isEmpty(count) ? 0 : Integer.parseInt(count);
+        productBean.position = ((EditText) mViewHashMap.get(R.id.add_product_et_position)).getText().toString();
+        productBean.mainClassify = getString(mMainClassifyResId);
+        productBean.subClassify = ((EditText) mViewHashMap.get(R.id.add_product_et_classify)).getText().toString();
+        productBean.backup = ((EditText) mViewHashMap.get(R.id.add_product_et_backup)).getText().toString();
+        String advance = ((EditText) mViewHashMap.get(R.id.add_product_et_advance)).getText().toString();
+        productBean.advance = TextUtils.isEmpty(advance) ? 0 : Integer.parseInt(advance);
+        String frequency = ((EditText) mViewHashMap.get(R.id.add_product_et_frequency)).getText().toString();
+        productBean.frequency = TextUtils.isEmpty(frequency) ? 0 : Integer.parseInt(frequency);
+        productBean.hintDate = DateUtil.add(productBean.exDate, 0, 0, (0 - productBean.advance));
+        mDBManager.saveProduct(productBean);
+        Toast.makeText(mContext, R.string.add_product_save_success_text, Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     private void initAllViews() {

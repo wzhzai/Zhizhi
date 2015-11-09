@@ -22,9 +22,11 @@ import com.cleverzone.zhizhi.RecordItemDetailActivity;
 import com.cleverzone.zhizhi.comui.KCalendar;
 import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Const;
+import com.cleverzone.zhizhi.util.DateUtil;
 import com.cleverzone.zhizhi.util.Utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,7 +47,7 @@ public class RecordFragment extends BaseFragment {
 
     private ArrayList<TextView> mHintTextViewList;
     private KCalendar mKCalendar;
-    private List<String> mMarkList;
+    private List<Date> mMarkList;
 
 
     /**
@@ -139,9 +141,7 @@ public class RecordFragment extends BaseFragment {
     }
 
     private boolean countIsZero(int which) {
-        // TODO: 2015/7/30 getCount
-//        return DBManager.getInstance(mContext).getProductInfoCount(mContext.getString(Const.RECORD_CLASSIFIES_TEXT[which])) == 0;
-        return true;
+        return DBManager.getInstance(mContext).getProductInfoCount(mContext.getString(Const.RECORD_CLASSIFIES_TEXT[which])) == 0;
     }
 
 
@@ -229,18 +229,16 @@ public class RecordFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         Log.e(TAG, "onResume");
-        // TODO: 2015/7/30 mark
-//        mMarkList = DBManager.getInstance(mContext).getAllRecentHintDate();
-//        mKCalendar.addMarks(mMarkList, 0);
+        mMarkList = DBManager.getInstance(mContext).getAllRecentHintDate();
+        mKCalendar.addMarks(mMarkList, 0, false);
         int index = 0;
         for (int i : Const.RECORD_CLASSIFIES_TEXT) {
             String mainClassify = mContext.getString(i);
-//            String hintDate = DBManager.getInstance(mContext).getRecentHintDateByMainClassify(mainClassify);
-            String hintDate = "";
-            if (TextUtils.isEmpty(hintDate)) {
+            int hintDate = DBManager.getInstance(mContext).getRecentHintDateByMainClassify(mainClassify);
+            if (hintDate == 0) {
                 mHintTextViewList.get(index).setText(mContext.getString(R.string.record_recent_hint_no_day_text));
             } else {
-                int differentDay = Utils.getDayDifference(hintDate);
+                int differentDay = Utils.getDayDifference(DateUtil.getDateString(hintDate));
                 mHintTextViewList.get(index).setText(Html.fromHtml(mContext.getString(R.string.record_recent_hint_text, differentDay)));
                 Log.e(TAG, "differentDay = " + differentDay);
             }

@@ -1,6 +1,7 @@
 package com.cleverzone.zhizhi.util;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by WANGZHENGZE on 2015/7/30.
@@ -72,5 +73,11 @@ public class DateUtil {
         calendar.add(Calendar.MONTH, month);
         calendar.add(Calendar.DAY_OF_MONTH, day);
         return getTenTimestamp(calendar.getTimeInMillis());
+    }
+
+    public static Date toDate(int timestamp) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp * 1000l);
+        return calendar.getTime();
     }
 }
