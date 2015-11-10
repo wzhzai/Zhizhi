@@ -28,6 +28,7 @@ import com.cleverzone.zhizhi.util.DateUtil;
 import com.cleverzone.zhizhi.util.SoftInputController;
 import com.cleverzone.zhizhi.util.Utils;
 import com.cleverzone.zhizhi.util.ViewEnableController;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,6 +61,10 @@ public class AddProductActivity extends BaseActivity {
 
     private DBManager mDBManager;
 
+    private int mMode;
+
+    private NewProductBean mNewProductBean;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +72,18 @@ public class AddProductActivity extends BaseActivity {
         mViewEnableController = new ViewEnableController();
         mViewHashMap = new HashMap<>();
         int which = getIntent().getIntExtra("which", 0);
+        mMode = getIntent().getIntExtra("mode", 0);
         mMainClassifyResId = Const.RECORD_CLASSIFIES_TEXT[which];
         setContentView(R.layout.activity_add_product);
         mContext = this;
+        if (mMode == MODE_SHOW) {
+            mNewProductBean = (NewProductBean) getIntent().getSerializableExtra("bean");
+            if (mNewProductBean == null) {
+                Toast.makeText(mContext, "数据错误，请重试", Toast.LENGTH_SHORT).show();
+                finish();
+                return;
+            }
+        }
         mDBManager = DBManager.getInstance(mContext);
         int title = 0;
         switch (which) {
@@ -114,9 +128,7 @@ public class AddProductActivity extends BaseActivity {
         setRightButton(R.string.add_product_edit_text, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (View view : mViewList) {
-                    view.setEnabled(true);
-                }
+                mViewEnableController.setAllEnable();
                 setSaveButton();
             }
         });
@@ -133,14 +145,27 @@ public class AddProductActivity extends BaseActivity {
 
     private void save() {
         NewProductBean productBean = new NewProductBean();
-        productBean.name = ((EditText) mViewHashMap.get(R.id.add_product_et_name)).getText().toString();
+        if (mMode == MODE_SHOW) {
+            productBean.id = mNewProductBean.id;
+        }
+        String name = ((EditText) mViewHashMap.get(R.id.add_product_et_name)).getText().toString();
+        if (TextUtils.isEmpty(name)) {
+            Toast.makeText(mContext, "请输入宝贝名字", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String life = ((EditText) mViewHashMap.get(R.id.add_product_et_shelf_lift)).getText().toString();
+        if (mPrTimestamp == 0 || mExTimestamp == 0 || TextUtils.isEmpty(life)) {
+            Toast.makeText(mContext, "请输入保质期", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        productBean.name = name;
         productBean.picPath = mImagePath;
         productBean.prDate = mPrTimestamp;
-        productBean.shelfLife = Integer.parseInt(((EditText) mViewHashMap.get(R.id.add_product_et_shelf_lift)).getText().toString());
+        productBean.shelfLife = Integer.parseInt(life);
         productBean.shelfLifeType = mLifeType;
         productBean.exDate = mExTimestamp;
         String count = ((EditText) mViewHashMap.get(R.id.add_product_et_quantity)).getText().toString();
-        productBean.count = TextUtils.isEmpty(count) ? 0 : Integer.parseInt(count);
+        productBean.count = TextUtils.isEmpty(count) ? 1 : Integer.parseInt(count);
         productBean.position = ((EditText) mViewHashMap.get(R.id.add_product_et_position)).getText().toString();
         productBean.mainClassify = getString(mMainClassifyResId);
         productBean.subClassify = ((EditText) mViewHashMap.get(R.id.add_product_et_classify)).getText().toString();
@@ -257,6 +282,10 @@ public class AddProductActivity extends BaseActivity {
         mViewHashMap.put(R.id.add_product_rg_shelf_lift, rgType);
         mViewEnableController.registerView(rgType);
 
+        mViewEnableController.registerView(rgType.findViewById(R.id.add_product_radio_day));
+        mViewEnableController.registerView(rgType.findViewById(R.id.add_product_radio_month));
+        mViewEnableController.registerView(rgType.findViewById(R.id.add_product_radio_year));
+
         EditText etCount = (EditText) findViewById(R.id.add_product_et_quantity);
         mViewHashMap.put(R.id.add_product_et_quantity, etCount);
         mViewEnableController.registerView(etCount);
@@ -280,6 +309,26 @@ public class AddProductActivity extends BaseActivity {
         EditText etFrequency = (EditText) findViewById(R.id.add_product_et_frequency);
         mViewHashMap.put(R.id.add_product_et_frequency, etFrequency);
         mViewEnableController.registerView(etFrequency);
+
+        if (mMode == MODE_SHOW) {
+            if (!TextUtils.isEmpty(mNewProductBean.picPath)) {
+                ImageLoader.getInstance().displayImage(mNewProductBean.picPath, imageView);
+            }
+            etName.setText(mNewProductBean.name);
+            mPrTimestamp = mNewProductBean.prDate;
+            tvPrDate.setText(DateUtil.getDateString(mNewProductBean.prDate));
+            etLife.setText(String.valueOf(mNewProductBean.shelfLife));
+            mLifeType = mNewProductBean.shelfLifeType;
+            checkLife();
+            etCount.setText(String.valueOf(mNewProductBean.count));
+            etPosition.setText(mNewProductBean.position);
+            etSubClassify.setText(mNewProductBean.subClassify);
+            etBackup.setText(mNewProductBean.backup);
+            etAdvance.setText(String.valueOf(mNewProductBean.advance));
+            etFrequency.setText(String.valueOf(mNewProductBean.frequency));
+            mViewEnableController.setAllDisable();
+        }
+
     }
 
     private void checkLife() {

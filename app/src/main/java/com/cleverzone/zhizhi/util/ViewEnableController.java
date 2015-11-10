@@ -29,12 +29,14 @@ public class ViewEnableController {
     public void setAllEnable() {
         for (View view : mViewArrayList) {
             view.setEnabled(true);
+            view.setAlpha(1f);
         }
     }
 
     public void setAllDisable() {
         for (View view : mViewArrayList) {
             view.setEnabled(false);
+            view.setAlpha(0.5f);
         }
     }
 }

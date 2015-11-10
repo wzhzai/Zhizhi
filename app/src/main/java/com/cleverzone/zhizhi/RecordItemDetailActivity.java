@@ -155,7 +155,7 @@ public class RecordItemDetailActivity extends BaseActivity {
             }
 
             TextView tvGroupName = (TextView) convertView.findViewById(R.id.record_detail_group_text);
-            tvGroupName.setText(getGroup(groupPosition));
+            tvGroupName.setText(getGroup(groupPosition).isEmpty() ? "未分类" : getGroup(groupPosition));
 
             TextView tvRecentHint = (TextView) convertView.findViewById(R.id.record_detail_group_recent_hint);
             int hintDate = DBManager.getInstance(mContext).getRecentHintDateByMainAndSubClassify(mMainClassify, getGroup(groupPosition));

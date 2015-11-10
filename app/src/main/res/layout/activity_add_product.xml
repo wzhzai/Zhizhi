@@ -254,7 +254,6 @@
                             android:inputType="number"
                             android:singleLine="true"
                             android:textColor="@color/add_product_text_color"
-                            android:text="20"
                             android:gravity="center"
                             android:textSize="@dimen/add_product_et_text_size" />
 
@@ -285,7 +284,6 @@
                             android:paddingRight="@dimen/add_product_et_padding_left_right"
                             android:singleLine="true"
                             android:gravity="center"
-                            android:text="左数第二个抽屉"
                             android:textColor="@color/add_product_text_color"
                             android:textSize="@dimen/add_product_et_text_size" />
 
@@ -324,7 +322,6 @@
                             android:paddingRight="@dimen/add_product_et_padding_left_right"
                             android:singleLine="true"
                             android:gravity="center"
-                            android:text="粉底"
                             android:textColor="@color/add_product_text_color"
                             android:textSize="@dimen/add_product_et_text_size" />
                     </LinearLayout>
@@ -354,7 +351,6 @@
                             android:paddingRight="@dimen/add_product_et_padding_left_right"
                             android:singleLine="true"
                             android:gravity="center"
-                            android:text="早上起来用"
                             android:textColor="@color/add_product_text_color"
                             android:textSize="@dimen/add_product_et_text_size" />
                     </LinearLayout>
@@ -389,7 +385,6 @@
                             android:imeOptions="actionNext"
                             android:inputType="number"
                             android:singleLine="true"
-                            android:text="10"
                             android:gravity="center"
                             android:textColor="@color/add_product_text_color"
                             android:textSize="@dimen/add_product_et_text_size" />
@@ -418,7 +413,6 @@
                             android:imeOptions="actionNext"
                             android:inputType="number"
                             android:singleLine="true"
-                            android:text="10"
                             android:gravity="center"
                             android:textColor="@color/add_product_text_color"
                             android:textSize="@dimen/add_product_et_text_size" />
