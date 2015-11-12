@@ -26,6 +26,7 @@ import com.cleverzone.zhizhi.util.Utils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
@@ -34,6 +35,9 @@ import java.util.Set;
 public class RecordItemDetailActivity extends BaseActivity {
 
     private static final String TAG = "RecordItemDetailActivity";
+    private static final int MODE_OVERDUE = 1;
+    private static final int MODE_NORMAL = 0;
+    private static final int MODE_DATE = 2;
 
     private Context mContext;
     private String mMainClassify;
@@ -42,6 +46,8 @@ public class RecordItemDetailActivity extends BaseActivity {
     private ArrayList<String> mGroupList;
     private int mWhich;
     private DetailAdapter mDetailAdapter;
+    private int mMode = MODE_NORMAL;
+    private int mChooseDate = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +55,15 @@ public class RecordItemDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_record_item_detail);
         mContext = this;
         mWhich = getIntent().getIntExtra("which", 0);
-        mMainClassify = mContext.getString(Const.RECORD_CLASSIFIES_TEXT[mWhich]);
+        if (mWhich == -100) {
+            mMode = MODE_OVERDUE;
+        } else if (mWhich == -200) {
+            mMode = MODE_DATE;
+            mChooseDate = getIntent().getIntExtra("date", 0);
+        } else {
+            mMode = MODE_NORMAL;
+            mMainClassify = mContext.getString(Const.RECORD_CLASSIFIES_TEXT[mWhich]);
+        }
         int title = 0;
         switch (mWhich) {
             case 0:
@@ -64,6 +78,9 @@ public class RecordItemDetailActivity extends BaseActivity {
             case 3:
                 title = R.mipmap.icon_others_title;
                 break;
+            default:
+                title = R.mipmap.ic_launcher;
+                break;
         }
         setTitle(title);
         setLeftButtonHide();
@@ -76,8 +93,13 @@ public class RecordItemDetailActivity extends BaseActivity {
 
     private void initData() {
         mAllProductInfoMap.clear();
-        // TODO: 2015/7/30 putAll
-        mAllProductInfoMap.putAll(DBManager.getInstance(mContext).getAllProductInfoByMainClassify(mMainClassify));
+        if (mMode == MODE_OVERDUE) {
+            mAllProductInfoMap.putAll(DBManager.getInstance(mContext).getAllOverDueInfo());
+        } else if (mMode == MODE_DATE) {
+            mAllProductInfoMap.putAll(DBManager.getInstance(mContext).getAllInfoByDate(mChooseDate));
+        } else {
+            mAllProductInfoMap.putAll(DBManager.getInstance(mContext).getAllProductInfoByMainClassify(mMainClassify));
+        }
         mGroupList.clear();
         mGroupList.addAll(mAllProductInfoMap.keySet());
     }
@@ -158,9 +180,14 @@ public class RecordItemDetailActivity extends BaseActivity {
             tvGroupName.setText(getGroup(groupPosition).isEmpty() ? "未分类" : getGroup(groupPosition));
 
             TextView tvRecentHint = (TextView) convertView.findViewById(R.id.record_detail_group_recent_hint);
-            int hintDate = DBManager.getInstance(mContext).getRecentHintDateByMainAndSubClassify(mMainClassify, getGroup(groupPosition));
-            int differentDay = Utils.getDayDifference(DateUtil.getDateString(hintDate));
-            tvRecentHint.setText(Html.fromHtml(mContext.getString(R.string.record_recent_hint_text, differentDay)));
+            if (mMode == MODE_NORMAL) {
+                int hintDate = DBManager.getInstance(mContext).getRecentHintDateByMainAndSubClassify(mMainClassify, getGroup(groupPosition));
+                int differentDay = Utils.getDayDifference(hintDate);
+                tvRecentHint.setText(Html.fromHtml(mContext.getString(R.string.record_recent_hint_text, differentDay)));
+                tvRecentHint.setVisibility(View.VISIBLE);
+            } else {
+                tvRecentHint.setVisibility(View.INVISIBLE);
+            }
 
             return convertView;
         }
@@ -201,6 +228,7 @@ public class RecordItemDetailActivity extends BaseActivity {
         } else {
             mDetailAdapter.notifyDataSetChanged();
         }
+
     }
 
 }

@@ -73,7 +73,9 @@ public class AddProductActivity extends BaseActivity {
         mViewHashMap = new HashMap<>();
         int which = getIntent().getIntExtra("which", 0);
         mMode = getIntent().getIntExtra("mode", 0);
-        mMainClassifyResId = Const.RECORD_CLASSIFIES_TEXT[which];
+        if (which != -100 && which != -200) {
+            mMainClassifyResId = Const.RECORD_CLASSIFIES_TEXT[which];
+        }
         setContentView(R.layout.activity_add_product);
         mContext = this;
         if (mMode == MODE_SHOW) {
@@ -167,7 +169,11 @@ public class AddProductActivity extends BaseActivity {
         String count = ((EditText) mViewHashMap.get(R.id.add_product_et_quantity)).getText().toString();
         productBean.count = TextUtils.isEmpty(count) ? 1 : Integer.parseInt(count);
         productBean.position = ((EditText) mViewHashMap.get(R.id.add_product_et_position)).getText().toString();
-        productBean.mainClassify = getString(mMainClassifyResId);
+        if (mMode == MODE_ADD) {
+            productBean.mainClassify = getString(mMainClassifyResId);
+        } else {
+            productBean.mainClassify = mNewProductBean.mainClassify;
+        }
         productBean.subClassify = ((EditText) mViewHashMap.get(R.id.add_product_et_classify)).getText().toString();
         productBean.backup = ((EditText) mViewHashMap.get(R.id.add_product_et_backup)).getText().toString();
         String advance = ((EditText) mViewHashMap.get(R.id.add_product_et_advance)).getText().toString();

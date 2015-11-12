@@ -62,10 +62,8 @@ public class Utils {
         return false;
     }
 
-    public static int getDayDifference(String stringDate) {
-        Calendar nowCalendar = Calendar.getInstance();
-        long l = parseStringToCalendar(stringDate).getTimeInMillis() - nowCalendar.getTimeInMillis();
-        return Long.valueOf(l / (1000 * 60 * 60 * 24)).intValue();
+    public static int getDayDifference(int date) {
+        return date / (1000 * 60 * 60 * 24);
     }
 
     public static AdapterView.OnItemClickListener getOnClassifyItemClickListener(final Context context) {

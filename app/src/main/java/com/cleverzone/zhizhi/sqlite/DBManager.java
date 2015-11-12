@@ -6,10 +6,9 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.cleverzone.zhizhi.bean.NewProductBean;
-import com.cleverzone.zhizhi.bean.ProductBean;
+import com.cleverzone.zhizhi.bean.ProductClassifyBean;
 import com.cleverzone.zhizhi.util.DateUtil;
 
 import java.util.ArrayList;
@@ -130,27 +129,49 @@ public class DBManager {
         return dateList;
     }
 
-    public int getRecentHintDateByMainClassify(String mainClassify) {
-        int hintDate;
-        Cursor cursor = db.query("record", new String[]{"min(hint_date)"}, "main_classify = ? and hint_date > ?", new String[]{mainClassify, String.valueOf(DateUtil.getTenTimestamp())}, null, null, null);
+    public int getRecentHintDate() {
+        int hintDate = -1;
+        Cursor cursor = db.query("record", new String[]{"hint_date"}, "hint_date >= ?", new String[]{String.valueOf(DateUtil.getTenTimestamp())}, null, null, "hint_date");
         cursor.moveToFirst();
-        hintDate = cursor.getInt(0);
+        if (cursor.moveToFirst()) {
+            hintDate = cursor.getInt(0);
+        }
+        cursor.close();
+        return hintDate;
+    }
+
+    public int getRecentHintDateByMainClassify(String mainClassify) {
+        int hintDate = -1;
+        Cursor cursor = db.query("record", new String[]{"hint_date"}, "main_classify = ? and hint_date >= ?", new String[]{mainClassify, String.valueOf(DateUtil.getTenTimestamp())}, null, null, "hint_date");
+        if (cursor.moveToFirst()) {
+            hintDate = cursor.getInt(0);
+        }
         cursor.close();
         return hintDate;
     }
 
     public int getRecentHintDateByMainAndSubClassify(String mainClassify, String subClassify) {
-        int hintDate;
-        Cursor cursor = db.query("record", new String[]{"min(hint_date)"}, "sub_classify = ? and main_classify = ? and hint_date > ?", new String[]{subClassify, mainClassify, String.valueOf(DateUtil.getTenTimestamp())}, null, null, null);
-        cursor.moveToFirst();
-        hintDate = cursor.getInt(0);
+        int hintDate = -1;
+        Cursor cursor = db.query("record", new String[]{"hint_date"}, "sub_classify = ? and main_classify = ? and hint_date >= ?", new String[]{subClassify, mainClassify, String.valueOf(DateUtil.getTenTimestamp())}, null, null, "hint_date");
+        if (cursor.moveToFirst()) {
+            hintDate = cursor.getInt(0);
+        }
         cursor.close();
         return hintDate;
     }
 
     public int getProductInfoCount(String mainClassify) {
         int count;
-        Cursor cursor = db.query("record", new String[]{"count(name)"}, "main_classify = ?", new String[]{mainClassify}, null, null, null);
+        Cursor cursor = db.query("record", new String[]{"count(name)"}, "main_classify = ? and hint_date >= ?", new String[]{mainClassify, String.valueOf(DateUtil.getTenTimestamp())}, null, null, null);
+        cursor.moveToFirst();
+        count = cursor.getInt(0);
+        cursor.close();
+        return count;
+    }
+
+    public int getOverdueProductInfoCount() {
+        int count;
+        Cursor cursor = db.query("record", new String[]{"count(name)"}, "hint_date < ?", new String[]{String.valueOf(DateUtil.getTenTimestamp())}, null, null, null);
         cursor.moveToFirst();
         count = cursor.getInt(0);
         cursor.close();
@@ -166,9 +187,41 @@ public class DBManager {
         return map;
     }
 
+    public Map<String, List<NewProductBean>> getAllOverDueInfo() {
+        Map<String, List<NewProductBean>> map = new LinkedHashMap<>();
+        List<ProductClassifyBean> subClassifyList = getAllOverDueClassifyInfo();
+        for (ProductClassifyBean bean : subClassifyList) {
+            map.put(bean.mainClassify + "--" + bean.subClassify, getAllOverDueProductInfo(bean.mainClassify, bean.subClassify));
+        }
+        return map;
+    }
+
+    public Map<String, List<NewProductBean>> getAllInfoByDate(int date) {
+        Map<String, List<NewProductBean>> map = new LinkedHashMap<>();
+        List<ProductClassifyBean> subClassifyList = getAllSubClassifyByDate(date);
+        for (ProductClassifyBean bean : subClassifyList) {
+            map.put(bean.mainClassify + "--" + bean.subClassify, getAllOverDueProductInfo(bean.mainClassify, bean.subClassify));
+        }
+        return map;
+    }
+
     public List<NewProductBean> getAllProductInfo(String mainClassify, String subClassify) {
         List<NewProductBean> productBeanList = new ArrayList<>();
-        Cursor cursor = db.query("record", new String[]{"*"}, "main_classify = ? and sub_classify = ?", new String[]{mainClassify, subClassify}, null, null, null);
+        Cursor cursor = db.query("record", new String[]{"*"}, "main_classify = ? and sub_classify = ? and hint_date >= ?", new String[]{mainClassify, subClassify, String.valueOf(DateUtil.getTenTimestamp())}, null, null, null);
+        setCursorToBean(productBeanList, cursor);
+        cursor.close();
+        return productBeanList;
+    }
+
+    public List<NewProductBean> getAllOverDueProductInfo(String mainClassify, String subClassify) {
+        List<NewProductBean> productBeanList = new ArrayList<>();
+        Cursor cursor = db.query("record", new String[]{"*"}, "main_classify = ? and sub_classify = ? and hint_date < ?", new String[]{mainClassify, subClassify, String.valueOf(DateUtil.getTenTimestamp())}, null, null, null);
+        setCursorToBean(productBeanList, cursor);
+        cursor.close();
+        return productBeanList;
+    }
+
+    private void setCursorToBean(List<NewProductBean> productBeanList, Cursor cursor) {
         while (cursor.moveToNext()) {
             NewProductBean productBean = new NewProductBean();
             productBean.id = cursor.getInt(cursor.getColumnIndex("_id"));
@@ -187,18 +240,42 @@ public class DBManager {
             productBean.hintDate = cursor.getInt(cursor.getColumnIndex("hint_date"));
             productBeanList.add(productBean);
         }
-        cursor.close();
-        return productBeanList;
     }
 
     public List<String> getAllSubClassifyByMainClassify(String mainClassify) {
         List<String> subClassifyList = new ArrayList<>();
-        Cursor cursor = db.query("record", new String[]{"sub_classify"}, "main_classify = ?", new String[]{mainClassify}, null, null, null);
+        Cursor cursor = db.query("record", new String[]{"sub_classify"}, "main_classify = ? and hint_date >= ?", new String[]{mainClassify, String.valueOf(DateUtil.getTenTimestamp())}, null, null, null);
         while (cursor.moveToNext()) {
             subClassifyList.add(cursor.getString(0));
         }
         cursor.close();
         return subClassifyList;
+    }
+
+    public List<ProductClassifyBean> getAllOverDueClassifyInfo() {
+        List<ProductClassifyBean> list = new ArrayList<>();
+        Cursor cursor = db.query(true, "record", new String[]{"main_classify, sub_classify"}, "hint_date < ?", new String[]{String.valueOf(DateUtil.getTenTimestamp())}, null, null, null, null);
+        while (cursor.moveToNext()) {
+            ProductClassifyBean bean = new ProductClassifyBean();
+            bean.mainClassify = cursor.getString(cursor.getColumnIndex("main_classify"));
+            bean.subClassify = cursor.getString(cursor.getColumnIndex("sub_classify"));
+            list.add(bean);
+        }
+        cursor.close();
+        return list;
+    }
+
+    public List<ProductClassifyBean> getAllSubClassifyByDate(int date) {
+        List<ProductClassifyBean> list = new ArrayList<>();
+        Cursor cursor = db.query(true, "record", new String[]{"main_classify, sub_classify"}, "hint_date = ?", new String[]{String.valueOf(date)}, null, null, null, null);
+        while (cursor.moveToNext()) {
+            ProductClassifyBean bean = new ProductClassifyBean();
+            bean.mainClassify = cursor.getString(cursor.getColumnIndex("main_classify"));
+            bean.subClassify = cursor.getString(cursor.getColumnIndex("sub_classify"));
+            list.add(bean);
+        }
+        cursor.close();
+        return list;
     }
 
 }

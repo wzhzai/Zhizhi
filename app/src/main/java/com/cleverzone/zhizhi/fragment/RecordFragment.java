@@ -25,9 +25,14 @@ import com.cleverzone.zhizhi.util.Const;
 import com.cleverzone.zhizhi.util.DateUtil;
 import com.cleverzone.zhizhi.util.Utils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -117,6 +122,8 @@ public class RecordFragment extends BaseFragment {
             setEachItemClickListener(itemList.get(i), i);
         }
 
+        setEachItemClickListener(view.findViewById(R.id.record_overdue), -100);
+
         mHintTextViewList.add((TextView)view.findViewById(R.id.record_makeup_recent_hint));
         mHintTextViewList.add((TextView) view.findViewById(R.id.record_food_recent_hint));
         mHintTextViewList.add((TextView) view.findViewById(R.id.record_medicine_recent_hint));
@@ -141,6 +148,9 @@ public class RecordFragment extends BaseFragment {
     }
 
     private boolean countIsZero(int which) {
+        if (which == -100){
+            return DBManager.getInstance(mContext).getOverdueProductInfoCount() == 0;
+        }
         return DBManager.getInstance(mContext).getProductInfoCount(mContext.getString(Const.RECORD_CLASSIFIES_TEXT[which])) == 0;
     }
 
@@ -189,6 +199,17 @@ public class RecordFragment extends BaseFragment {
                     mKCalendar.removeAllBgColor();
                     mKCalendar.setCalendarDayBgColor(dateFormat, R.drawable.calendar_date_focused);
                     mDate = dateFormat;//最后返回给全局 mDate
+                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    try {
+                        Date date = format.parse(dateFormat);
+                        Intent intent = new Intent(mContext, RecordItemDetailActivity.class);
+                        intent.putExtra("which", -200);
+                        intent.putExtra("date", DateUtil.getTenTimestamp(date.getTime()));
+                        startActivity(intent);
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -228,19 +249,17 @@ public class RecordFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e(TAG, "onResume");
         mMarkList = DBManager.getInstance(mContext).getAllRecentHintDate();
         mKCalendar.addMarks(mMarkList, 0, false);
         int index = 0;
         for (int i : Const.RECORD_CLASSIFIES_TEXT) {
             String mainClassify = mContext.getString(i);
             int hintDate = DBManager.getInstance(mContext).getRecentHintDateByMainClassify(mainClassify);
-            if (hintDate == 0) {
+            if (hintDate == -1) {
                 mHintTextViewList.get(index).setText(mContext.getString(R.string.record_recent_hint_no_day_text));
             } else {
-                int differentDay = Utils.getDayDifference(DateUtil.getDateString(hintDate));
+                int differentDay = Utils.getDayDifference(hintDate);
                 mHintTextViewList.get(index).setText(Html.fromHtml(mContext.getString(R.string.record_recent_hint_text, differentDay)));
-                Log.e(TAG, "differentDay = " + differentDay);
             }
             index ++;
         }

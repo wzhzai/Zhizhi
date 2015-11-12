@@ -4,6 +4,7 @@ package com.cleverzone.zhizhi.fragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cleverzone.zhizhi.R;
+import com.cleverzone.zhizhi.TestActivity;
 import com.cleverzone.zhizhi.comui.LoadingDialog;
 import com.cleverzone.zhizhi.sqlite.DBManager;
 import com.cleverzone.zhizhi.util.Utils;
@@ -155,9 +157,8 @@ public class ZhizhiFragment extends BaseFragment implements Handler.Callback {
     private void setTopHintInfo() {
         TextView tvDay = (TextView) mHeaderView.findViewById(R.id.zhizhi_top_day_hint_tv_number);
         TextView tvHint = (TextView) mHeaderView.findViewById(R.id.zhizhi_top_day_hint_tv_normal);
-//        String hintDate = DBManager.getInstance(mContext).getRecentHintDate();
-        String hintDate = "";
-        if (TextUtils.isEmpty(hintDate)) {
+        int hintDate = DBManager.getInstance(mContext).getRecentHintDate();
+        if (hintDate == -1) {
             tvHint.setText(R.string.zhizhi_top_day_hint_no_product);
             tvDay.setVisibility(View.GONE);
             ((View)tvHint.getParent()).setOnClickListener(mOnAddProductClickListener);
@@ -167,6 +168,15 @@ public class ZhizhiFragment extends BaseFragment implements Handler.Callback {
             tvDay.setVisibility(View.VISIBLE);
             ((View)tvHint.getParent()).setOnClickListener(null);
         }
+
+        TextView tvLittleHint = (TextView) mHeaderView.findViewById(R.id.zhizhi_top_little_hint);
+        tvLittleHint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, TestActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
